@@ -5,8 +5,10 @@ chrome extension to queue youtube songs
 
 * Add sonngs/videos with just a right click and select "Add video to queue".
 * Remove/play any song/video from the queue.
+* Totally separate queue to play songs so that your playlist remains intact.
+* Add video to any playlists.
 * Create playlists with just one click.
-* Three storage slots provided to store/load playlists.
+* Create, edit, delete, load unlimited playlists.
 
 
 ### install from chrome webstore
