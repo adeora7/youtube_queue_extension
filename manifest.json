@@ -1,7 +1,7 @@
 {
   "name": "Youtube Queue",
   "description": "Allows you to queue youtube videos and plays them for you.",
-  "version": "1.0",
+  "version": "1.2",
   "permissions": ["contextMenus", "tabs", "<all_urls>", "storage"],
   "browser_action" : {
   	"default_icon" : "icon48.png",
@@ -12,7 +12,7 @@
   },
   "content_scripts": [
   {
-      "matches": ["https://*/*"],
+      "matches": ["https://www.youtube.com/*", "https://m.youtube.com/*"],
       "js": ["content.js"]
   }],
   "manifest_version": 2,

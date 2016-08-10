@@ -116,8 +116,23 @@ function somefunction(info, tab){
 		alert("invalid url, can't be added");
 	}
 }
+
+function somefunction2(info, tab){
+  if(validateYouTubeUrl(tab.url))
+  {
+    getJson(tab.url);
+  }
+  else
+  {
+    alert("invalid url, can't be added");
+  }
+}
+
 chrome.contextMenus.create({"title":"Add video to queue", "contexts" : ["link"], 
 	"onclick": somefunction});
+
+chrome.contextMenus.create({"title":"Add video to queue", "contexts" : ["video"], 
+  "onclick": somefunction2});
 
 
 chrome.runtime.onMessage.addListener(
@@ -156,5 +171,9 @@ chrome.runtime.onMessage.addListener(
         playSpecificVideo(0);
       }
       sendResponse({res:"state loaded"});
+    }
+    else if(request.greeting == "pp")
+    {
+      sendResponse({res:tabId});
     }
   });
