@@ -400,6 +400,7 @@ input:focus{
 }
 .dropdown-content{
 	width:150px !important;
+	max-height: 300px !important;
 }
 
 #editWindow{

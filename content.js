@@ -25,6 +25,7 @@ window.addEventListener("getChromeData", function(evt) {
 document.getElementById("play_next").addEventListener('click', play_next, false);
 document.getElementById("pause_play").addEventListener('click', play_pause, false);
 document.getElementById("play_previous").addEventListener('click', play_previous, false);
+document.getElementById("empty").addEventListener('click', empty_queue, false);
 
 
 function hideP(){
@@ -52,6 +53,13 @@ function play_previous()
     refresh();
   });
 }
+
+function empty_queue(){
+  chrome.runtime.sendMessage({greeting : "empty_queue"}, function(response){
+    refresh();
+  })
+}
+
 //in video controls end
 
 

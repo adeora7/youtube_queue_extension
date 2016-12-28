@@ -128,6 +128,13 @@ function somefunction2(info, tab){
   }
 }
 
+function empty_queue(){
+  var s_len = main.songs.length;
+  while(s_len--){
+    removeCertainVideo(0);
+  }
+}
+
 chrome.contextMenus.create({"title":"Add video to queue", "contexts" : ["link"], 
 	"onclick": somefunction});
 
@@ -175,5 +182,9 @@ chrome.runtime.onMessage.addListener(
     else if(request.greeting == "pp")
     {
       sendResponse({res:tabId});
+    }
+    else if(request.greeting == "empty_queue"){
+      empty_queue();
+      sendResponse({res: "Queue is now empty."});
     }
   });
