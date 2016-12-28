@@ -15,9 +15,10 @@ window.addEventListener("getChromeData", function(evt) {
   var request = evt.detail;
   var response = {requestId: request.id};
   //background script play next video
-
-  chrome.runtime.sendMessage({greeting: "next_video"}, function(response) {
-    refresh();
+  chrome.storage.sync.get("youtube_queue_extension_toggle", function(data){
+    chrome.runtime.sendMessage({greeting: "next_video", toggle : data["youtube_queue_extension_toggle"]}, function(response) {
+      refresh();
+    });
   });
   window.dispatchEvent(new CustomEvent("sendChromeData", {detail: response}));
 }, false);
@@ -25,6 +26,7 @@ window.addEventListener("getChromeData", function(evt) {
 document.getElementById("play_next").addEventListener('click', play_next, false);
 document.getElementById("pause_play").addEventListener('click', play_pause, false);
 document.getElementById("play_previous").addEventListener('click', play_previous, false);
+document.getElementById("loop_all").addEventListener('click', toggle_loop, false);
 document.getElementById("empty").addEventListener('click', empty_queue, false);
 
 
@@ -34,8 +36,10 @@ function hideP(){
 }
 
 function play_next(){
-  chrome.runtime.sendMessage({greeting: "next_video"}, function(response) {
-    refresh();
+  chrome.storage.sync.get("youtube_queue_extension_toggle", function(data){
+    chrome.runtime.sendMessage({greeting: "next_video", toggle : data["youtube_queue_extension_toggle"]}, function(response) {
+      refresh();
+    });
   });
 }
 function play_pause()
@@ -97,6 +101,58 @@ var removeSpecific = function(){
 
 //popup functions end
 
+//loop functions start
+function toggle_loop(){
+  chrome.storage.sync.get("youtube_queue_extension_toggle", function(data){
+    if(data["youtube_queue_extension_toggle"] == undefined || (data["youtube_queue_extension_toggle"] != "no_loop" && data["youtube_queue_extension_toggle"] != "loop")  ){
+      chrome.storage.sync.set({"youtube_queue_extension_toggle" : "loop"}, function(){
+
+      });
+    }
+    else{
+      if(data["youtube_queue_extension_toggle"] == "loop"){
+        chrome.storage.sync.set({"youtube_queue_extension_toggle" : "no_loop"}, function(){
+          $('#loop_all').tooltip('remove');
+          $("#loop_all").attr("data-tooltip", "No Loop");
+          $("#loop_all").tooltip();
+          $("#loop_all").css("opacity", "0.3");
+        });
+      }
+      else
+      {
+        chrome.storage.sync.set({"youtube_queue_extension_toggle" : "loop"}, function(){
+          $("#loop_all").tooltip('remove');
+          $("#loop_all").attr("data-tooltip", "Loop");
+          $("#loop_all").tooltip();
+          $("#loop_all").css("opacity", "1");
+        });
+      }
+    }
+
+  });
+}
+//loop functions end
+
+function load_tooltips(){
+  chrome.storage.sync.get("youtube_queue_extension_toggle", function(data){
+    if(data["youtube_queue_extension_toggle"] == undefined || (data["youtube_queue_extension_toggle"] != "no_loop" && data["youtube_queue_extension_toggle"] != "loop")  ){
+      chrome.storage.sync.set({"youtube_queue_extension_toggle" : "loop"}, function(){
+
+      });
+    }
+    chrome.storage.sync.get("youtube_queue_extension_toggle", function(data){
+      if(data["youtube_queue_extension_toggle"] == "no_loop"){
+        $("#loop_all").attr("data-tooltip", "No Loop");
+        $("#loop_all").css("opacity", "0.3");
+      }
+      else
+        $("#loop_all").attr("data-tooltip", "Loop");
+    });
+  });
+
+
+}
+load_tooltips();
 
 //refresh function starts
 function refresh(){

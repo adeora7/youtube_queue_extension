@@ -11,7 +11,7 @@ function createTab(){
      tabId = tab.id;
     });
     main.tab_create = 1;
-    next_video = 1;
+    next_video = 1 % main.songs.length;
   }
 }
 
@@ -33,15 +33,15 @@ function playNextVideo(){
 
 function playPreviousVideo(){
   chrome.tabs.get(tabId, function(tab){
-    var l = main.songs.length;
-    var prev = (next_video + l-2)%l;
-    next_video = (next_video + l-1)%l;
     if(main.songs.length == 0)
     { 
       chrome.tabs.update(tabId, {'url': 'https://www.youtube.com'});
     }
     else
     {  
+      var l = main.songs.length;
+      var prev = (next_video + l-2)%l;
+      next_video = (next_video + l-1)%l;
       chrome.tabs.update(tabId, {'url': main.songs[prev].url});
     }
   });
@@ -152,8 +152,13 @@ chrome.runtime.onMessage.addListener(
     }
     else if(request.greeting == "next_video")
     {
-      playNextVideo();
-      sendResponse({res:"next video playing"});
+      if(request.toggle == "no_loop" && next_video == 0){
+          chrome.tabs.update(tabId, {'url': 'https://www.youtube.com'});
+      }
+      else{
+        playNextVideo();
+        sendResponse({res:"next video playing"});
+      }
     }
     else if(request.greeting == "previous_video")
     {

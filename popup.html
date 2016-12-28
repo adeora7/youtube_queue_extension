@@ -11,23 +11,23 @@
 	</head>
 	<body>
 		<div class="row">
-			<div class="top-each">
+			<div class="top-each" >
     			<span style="font-size:15px;">Youtube Queuing Extension</span>
     		</div>
     		<div id="controls">
-    			<div class="control-icon" id="play_previous">
+    			<div class="control-icon tooltipped" data-position="bottom" data-delay="50" data-tooltip="Previous" id="play_previous">
     				<img src="images/wprevious.png">
     			</div>
-    			<div class="control-icon" id="pause_play">
+    			<div class="control-icon tooltipped" data-position="bottom" data-delay="50" data-tooltip="Play/Pause" id="pause_play">
     				<img src="images/wplay_pause.png">
     			</div>
-    			<div class="control-icon" id="play_next">
+    			<div class="control-icon tooltipped" data-position="bottom"  data-delay="50" data-tooltip="Next" id="play_next">
     				<img src="images/wnext.png">
     			</div>
-                <div class="control-icon" id="loop-all">
+                <div class="control-icon tooltipped" data-position="bottom"  data-delay="50" data-tooltip="Loop" id="loop_all">
                     <img src="images/loop-all.png">
                 </div>
-                <div class="control-icon" id="empty">
+                <div class="control-icon tooltipped" data-position="bottom" data-delay="50" data-tooltip="Empty Queue" id="empty">
                     <img src="images/empty.png">
                 </div>
     		</div>
@@ -36,7 +36,7 @@
         			<li class="tab col s4"><a href="#test1">Playlists</a></li>
         			<li class="tab col s4"><a class="active" href="#test2">Queue(<span id="number">0</span>)</a></li>
       			</ul>
-                <div id="howToUse" title="How to use?">
+                <div id="howToUse" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="How to use ?">
                     <img src="images/winfo1.png">
                 </div>
     		</div>
@@ -123,9 +123,23 @@
                     Click on any Playlist to play it and load the songs to the queue.
                     </span>
                 </li>
-                
+
                 <li>
                     <span class="number">8.</span>
+                    <span>
+                    Click on Loop icon to toggle it. If turned on, it repeats all the songs in the queue.
+                    </span>
+                </li>
+
+                <li>
+                    <span class="number">9.</span>
+                    <span>
+                    Click on Empty icon to clear the queue.
+                    </span>
+                </li>
+                
+                <li>
+                    <span class="number">10.</span>
                     <span>
                         If you like the extension, show your support by staring the repository on github <img id="github" src="images/github.png">
                     </span>
