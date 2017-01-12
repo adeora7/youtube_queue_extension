@@ -16,6 +16,7 @@ body{
 	display: flex;
 	flex-direction:row;
 	justify-content:flex-start;
+	min-height: 37px;
 }
 #a > div span:nth-child(2){
 	margin-left: auto;
