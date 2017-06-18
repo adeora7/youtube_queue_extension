@@ -57,9 +57,17 @@ function playSpecificVideo(songnum){
 }
 function removeCertainVideo(songnum){
   //songnum is index
+  var curr = next_video-1;
   var n = Number(songnum);
   if(n>=0 && n<main.songs.length)
+  {
     main.songs.splice(n,1);
+    if(n == curr )
+      playSpecificVideo(n);
+    else if(n<curr){
+      next_video = next_video-1;
+    }
+  }
 }
 
 chrome.tabs.onRemoved.addListener(function(tabid){
