@@ -37,6 +37,6 @@ if(video) {
 }
 window.addEventListener("pause_play", function(evt) {
     //document.querySelector('.ytp-play-button').click();
-    alert("hello");
+    // alert("hello");
     pp();
 }, false);

@@ -17,6 +17,7 @@ window.addEventListener("getChromeData", function(evt) {
   //background script play next video
   chrome.storage.sync.get("youtube_queue_extension_toggle", function(data){
     chrome.runtime.sendMessage({greeting: "next_video", toggle : data["youtube_queue_extension_toggle"]}, function(response) {
+      alert("yes");
       refresh();
     });
   });
@@ -284,6 +285,18 @@ function populateSongs(name){
     });
   }
 }
+function showStorePlaylist(sgs, name){
+  var el = document.getElementById("editWindowBody");
+  el.innerHTML = "";
+  if(sgs.length == 0)
+    el.innerHTML = "<span style='font-size:16px;color:gray;'>Playlist empty.</span>";
+  for(var i = 0; i < sgs.length; i++){
+    el.innerHTML += "<div class='editEach'><div class='editEachName'>"+ sgs[i].name.substring(0, 25) +"</div></div>";
+  }
+  $("#editWindowHead").html(name.substring(0,15));
+  $("#layer").fadeIn("fast");
+  $("#editWindow").fadeIn("medium");
+}
 
 function fillLoadlist(){
   var z = document.getElementById("yo");
@@ -310,15 +323,21 @@ function fillLoadlist(){
       {
         for(var i = 0; i< data.allPlaylists.length;i++)
         {
-          y.innerHTML += "<div><div class='loadEachList'>"+ data.allPlaylists[i].substring(0,20) +"</div><div class='editImage' name='"+ data.allPlaylists[i] +"' title='Edit playlist'><img src='images/edit.png'></div><div class='deleteImage' name='"+ data.allPlaylists[i] +"' title='Delete playlist'><img src='images/delete.png'></div></div>";
-          x.innerHTML += "<li><a href='#!' class='dropEachList' name='"+ data.allPlaylists[i] +"'>"+ data.allPlaylists[i].substring(0, 12) +"</a></li>";
+          y.innerHTML += "<div class='loadEachTile' name='"+ data.allPlaylists[i] +"'><div class='loadEachList'>"+
+                          data.allPlaylists[i].substring(0,20) +"</div><div class='optionsEach' name='"+ data.allPlaylists[i] +"'><div class='playImage' name='"
+                          + data.allPlaylists[i] +"' title='Play'><img src='images/edit.png'></div><div class='editImage' name='"
+                          + data.allPlaylists[i] +"' title='Edit'><img src='images/edit.png'></div><div class='deleteImage' name='"
+                          + data.allPlaylists[i] +"' title='Delete'><img src='images/delete.png'></div></div></div>";
+          
+          x.innerHTML += "<li><a href='#!' class='dropEachList' name='"+ data.allPlaylists[i] +"'>"+
+                         data.allPlaylists[i].substring(0, 12) +"</a></li>";
         }
-
-        var sel = document.getElementsByClassName('loadEachList');
+    
+        var sel = document.getElementsByClassName('playImage');
         for(var i = 0; i < sel.length; i++) {
           var se = sel[i];
           se.onclick = function() {
-            loadPlaylist(this.innerHTML);
+            loadPlaylist(this.getAttribute('name'));
           }
         }
 
@@ -345,10 +364,53 @@ function fillLoadlist(){
             addVideoToPlaylist(this.name);
           }
         }
+        
+        $(".optionsEach").css("height","0px");
+        $(".optionsEach").hide();
+
+        $(".loadEachTile").click(function(){
+            showElementByName( $(".optionsEach"), this.getAttribute("name") );
+        });
+        $(".loadEachTile").mouseleave(
+          function(){
+            hideElementByName( $(".optionsEach"), this.getAttribute("name") );
+          }
+        );
 
       }
     }
   });
+}
+
+function showElementByName(elements, name)
+{
+  for(var i = 0; i < elements.length; i++) {
+    if(elements[i].getAttribute('name') == name)
+    {
+      if($(elements[i]).is(":hidden")) 
+      { $(elements[i]).show();
+        $(elements[i]).animate({height: "50px"});
+      }
+      else
+        hideElementByName(elements, name);
+      break;
+    }
+
+  } 
+}
+
+function hideElementByName(elements, name)
+{
+
+  for(var i = 0; i < elements.length; i++) {
+    if(elements[i].getAttribute('name') == name)
+    {
+      $(elements[i]).animate({height: "0px"});
+      $(elements[i]).hide();
+
+      break;
+    }  
+  } 
 }
 
 function addVideoToPlaylist(name){
@@ -488,7 +550,67 @@ function loadPlaylist(name){
     }
   });
 }
+function loadDataInStore()
+{
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200)
+    {
+      var store = document.getElementById("loadStore");
+      store.innerHTML = "";
+      var data = xhttp.responseText;
+      data = JSON.parse(data);
+      for(var key in data)
+      {
+        store.innerHTML += "<div class='storeEachTile' name ='"+key+"'><div class='storeEachList'>"+ key+
+                            "</div><div class='optionsEach' name ='"+key+"'><div class='showImage' name='" +key +
+                            "' title='Show playlist'><img src='images/show.png'></div><div class='downloadImage' name='"+ 
+                             key +"' title='Download playlist'><img src='images/download.png'></div></div></div>";
+      } 
+      var sel = document.getElementsByClassName('storeEachList');
+      for(var i = 0; i < sel.length; i++) {
+        var se = sel[i];
+        se.onclick = function() {
+          // loadPlaylist(this.innerHTML);
+          console.log("play it");
+        }
+      }
 
+      var sel = document.getElementsByClassName('downloadImage');
+      for(var i = 0; i < sel.length; i++) {
+        var se = sel[i];
+        se.onclick = function() {
+          // deletePlaylist(this.getAttribute('name'));
+          console.log("download it");
+        }
+      }
+
+      var sel = document.getElementsByClassName('showImage');
+      for(var i = 0; i < sel.length; i++) {
+        var se = sel[i];
+        se.onclick = function() {
+          showStorePlaylist(data[this.getAttribute('name')], this.getAttribute('name'));
+        }
+      }
+
+      $(".optionsEach").css("height","0px");
+      $(".optionsEach").hide();
+      $(".storeEachTile").click(
+        function(){
+          showElementByName( $(".optionsEach"), this.getAttribute("name") );
+        }
+      );
+      $(".storeEachTile").mouseleave(
+        function(){
+          hideElementByName( $(".optionsEach"), this.getAttribute("name") );
+        }
+      );
+      
+    }
+  };
+  xhttp.open("GET", "https://adeora7.github.io/youtube_queue_playlists/master.json?_=" + new Date().getTime(), true);
+  xhttp.send();
+}
 
 function githubfunc(){
   chrome.tabs.create({'url': 'https://github.com/adeora7/youtube_queue_extension'}, function(tab) {
@@ -530,4 +652,5 @@ $(document).ready(function(){
   $("#layer").hide();
   $("#editWindow").hide();
   $("#info").hide();
+  loadDataInStore();
 });

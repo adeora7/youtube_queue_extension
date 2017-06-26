@@ -241,23 +241,35 @@ body{
 	border:1px solid #DADADA;
 	overflow-y:hidden; 
 }
-#loadBody{
+#loadBody, #loadStore{
 	overflow-y:auto;
-	min-height: 50px;
+	min-height: 5px;
 	margin-top: 5px;
 	max-height: 250px;
 }
-.loadEachList{
+.loadEachTile, .storeEachTile{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+}
+.loadEachList, .storeEachList{
 	font-size: 15px;
 	padding:5px;
-	border:1px solid #DADADA;
+	border-bottom: 1px solid #DADADA;
 	cursor: pointer;
-	width: 70%;
+	width: 90%;
 	float: left;
+	margin-top: 3px; 
 	color:#4C4C4C;
 }
-.loadEachList:hover{
-	background-color: #DADADA;
+.optionsEach{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: flex-start;
+	width: 90%;
+
 }
 #notifPopup{
 	position: fixed;
@@ -280,7 +292,7 @@ box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 
 }
 
-.editImage{
+.deleteImage, .editImage, .downloadImage, .showImage, .playImage{
 	height:34px;
 	width:15%;
 	float: left;
@@ -289,40 +301,21 @@ box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 	align-items: center;
 	justify-content: center;
 	border:1px solid #DADADA;
-	cursor: pointer;
-	background-color: #E6454C;
-}
-.editImage:hover{
-	background-color: #DA262D;
-}
-.editImage:active{
-	background-color: #E4E2E2;
-}
-.editImage >  img{
-	width:15px;
-	height:15px;
-}
-
-.deleteImage{
-	height:34px;
-	width:15%;
-	float: left;
-	display: flex;
-	flex-direction:row;
-	align-items: center;
-	justify-content: center;
-	border:1px solid #DADADA;
+	width: 50%;
 	cursor: pointer;
 }
-.deleteImage:hover{
+/*.deleteImage:hover, .editImage:hover, .downloadImage:hover, .showImage:hover{
 	background-color: #D8D7D7;
 }
-.deleteImage:active{
+.deleteImage:active, .editImage:active, .downloadImage:active, .showImage:active{
 	background-color: #E4E2E2;
-}
-.deleteImage >  img{
+}*/
+.deleteImage > img, .editImage > img, .downloadImage > img, .showImage >  img, .playImage> img{
 	width:15px;
 	height:15px;
+}
+.deleteImage:active, .editImage:active, .downloadImage:active, .showImage:active{
+	background-color: #E4E2E2;
 }
 
 .add{
@@ -389,11 +382,11 @@ input:focus{
 	outline-color: #DA262D;
 }
 
-#addPlaylist{
+#addPlaylist, #searchStore{
 	margin-top:5px;
 }
 
-#addPlaylistButton{
+#addPlaylistButton, #searchStoreButton{
 	background-color: #DA262D;
 	color:white;
 	border:0px solid white;

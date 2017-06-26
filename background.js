@@ -139,8 +139,10 @@ function somefunction2(info, tab){
 function empty_queue(){
   var s_len = main.songs.length;
   while(s_len--){
-    removeCertainVideo(0);
+    // removeCertainVideo(0);
+    main.songs.splice(0,1);
   }
+  chrome.tabs.update(tabId, {'url': 'https://www.youtube.com'});
 }
 
 chrome.contextMenus.create({"title":"Add video to queue", "contexts" : ["link"], 
