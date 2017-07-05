@@ -263,14 +263,21 @@ body{
 	margin-top: 3px; 
 	color:#4C4C4C;
 }
+.loadEachList:hover, .storeEachList:hover{
+	background-color: #DADADA;
+}
 .optionsEach{
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
-	align-items: flex-start;
+	align-items: center;
 	width: 90%;
-
+	margin-top: 2px;
+	padding-bottom: 0px;
+	border: 1px solid #DADADA;
+	border-radius: 10px;
 }
+
 #notifPopup{
 	position: fixed;
 	width: 80%;
@@ -292,29 +299,30 @@ box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 
 }
 
-.deleteImage, .editImage, .downloadImage, .showImage, .playImage{
-	height:34px;
-	width:15%;
+.deleteImage, .editImage, .downloadImage, .showImage, .playImage, .playStoreImage, .uploadImage{
+	height:40px;
+	width: 40px;
 	float: left;
 	display: flex;
 	flex-direction:row;
 	align-items: center;
 	justify-content: center;
 	border:1px solid #DADADA;
-	width: 50%;
 	cursor: pointer;
+	border-radius: 50%;
+	background-color: white;
 }
-/*.deleteImage:hover, .editImage:hover, .downloadImage:hover, .showImage:hover{
-	background-color: #D8D7D7;
+.deleteImage:hover, .editImage:hover, .downloadImage:hover, .showImage:hover, .playImage:hover,.playStoreImage:hover, .uploadImage:hover{
+	background-color: #B1B1B1;
 }
-.deleteImage:active, .editImage:active, .downloadImage:active, .showImage:active{
+/*.deleteImage:active, .editImage:active, .downloadImage:active, .showImage:active{
 	background-color: #E4E2E2;
 }*/
-.deleteImage > img, .editImage > img, .downloadImage > img, .showImage >  img, .playImage> img{
+.deleteImage > img, .editImage > img, .downloadImage > img, .showImage >  img, .playImage> img, .playStoreImage> img, .uploadImage> img{
 	width:15px;
 	height:15px;
 }
-.deleteImage:active, .editImage:active, .downloadImage:active, .showImage:active{
+.deleteImage:active, .editImage:active, .downloadImage:active, .showImage:active, .playStoreImage:active{
 	background-color: #E4E2E2;
 }
 

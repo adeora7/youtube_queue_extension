@@ -97,7 +97,7 @@ function addtodisplay(name, url)
 }
 
 var getJson = function(url){
-  var s = url.split("/watch?v=")
+  var s = url.split("/watch?v=");
   var first = "https://www.googleapis.com/youtube/v3/videos?id=";
   var second = "&key=AIzaSyDNwkpSo1Jyb6Yo3LDyHH1xm7Syfe2NWQg&part=snippet";
   var new_url = first + s[1] + second;
