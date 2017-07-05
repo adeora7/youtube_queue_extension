@@ -545,10 +545,6 @@ function uploadPlaylist(name){
   {
     chrome.storage.sync.get(name, function(data){
       var sgs = data[name];
-      // var req = {};
-      // req["name"] = name;
-      // req["videos"] = sgs;
-      // req = JSON.stringify(req);
       sgs = JSON.stringify(sgs);
       var http = new XMLHttpRequest();
       var url = "https://multicultural-drake-14693.herokuapp.com/upload/playlist/";
@@ -653,7 +649,7 @@ function savePlaylist(videos, name){
 function loadDataInStore(name)
 {
   var store = document.getElementById("loadStore");
-  store.innerHTML = "loading.....";
+  store.innerHTML = "<span id='playlistEmpty'>Loading...</span>";
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200)
@@ -663,7 +659,7 @@ function loadDataInStore(name)
       data = JSON.parse(data);
       
       if(data.length == 0)
-        store.innerHTML = "You search did not match any results. Please reduce your expectations. :p ";
+        store.innerHTML = "<span id='playlistEmpty'>No results</span>";
       for(var i=0; i< data.length; i++)
       {
         store.innerHTML += "<div class='storeEachTile' name ='"+data[i].name+"'><div class='storeEachList'>"+ data[i].name+
@@ -739,6 +735,18 @@ ssb.addEventListener('click', function(){
   var nn = document.getElementById("searchStoreName").value;
   loadDataInStore(nn);
 }, false);
+
+$("#addPlaylistName").keypress(function(e) {
+    if(e.which == 13) {
+        apb.click();
+    }
+});
+
+$("#searchStoreName").keypress(function(e) {
+    if(e.which == 13) {
+        ssb.click();
+    }
+});
 
 $(window).click(function() {
   hideP();

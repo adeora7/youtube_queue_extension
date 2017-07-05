@@ -384,7 +384,6 @@ input[type="submit"]{
 	width: 27%;
 	cursor:pointer;
 	background-color: #E6454C !important ;
-	border-radius: 5px;
 }
 input:focus{
 	outline-color: #DA262D;
