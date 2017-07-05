@@ -324,7 +324,7 @@ function fillLoadlist(){
         for(var i = 0; i< data.allPlaylists.length;i++)
         {
           y.innerHTML += "<div class='loadEachTile' name='"+ data.allPlaylists[i] +"'><div class='loadEachList'>"+
-                          data.allPlaylists[i].substring(0,20) +"</div><div class='optionsEach' name='"+ data.allPlaylists[i] +"'><div class='playImage' name='"
+                          data.allPlaylists[i].substring(0,20) +"</div><div class='optionsEachPlaylist' name='"+ data.allPlaylists[i] +"'><div class='playImage' name='"
                           + data.allPlaylists[i] +"' title='Play'>PLAY</div><div class='editImage' name='"
                           + data.allPlaylists[i] +"' title='Edit'>EDIT</div><div class='uploadImage' name='"
                           + data.allPlaylists[i] +"' title='Upload'>UPLOAD</div><div class='deleteImage' name='"
@@ -374,15 +374,15 @@ function fillLoadlist(){
           }
         }
         
-        // $(".optionsEach").css("height","0px");
-        $(".optionsEach").hide();
+        // $(".optionsEachPlaylist").css("height","0px");
+        $(".optionsEachPlaylist").hide();
 
         $(".loadEachTile").click(function(){
-            showElementByName( $(".optionsEach"), this.getAttribute("name") );
+            showElementByName( $(".optionsEachPlaylist"), this.getAttribute("name") );
         });
         $(".loadEachTile").mouseleave(
           function(){
-            hideElementByName( $(".optionsEach"), this.getAttribute("name") );
+            hideElementByName( $(".optionsEachPlaylist"), this.getAttribute("name") );
           }
         );
 
@@ -606,6 +606,50 @@ function loadStorePlaylist(videos, name)
     notif("Playlist empty.");
   }
 }
+
+function savePlaylist(videos, name){
+
+    name = name.replace( /'/g, "" );
+    if(name.length <=0){
+      notif("Not a valid name.");
+    }
+    else{
+      chrome.storage.sync.get('allPlaylists', function(data){
+        if(data.allPlaylists === undefined)
+        {
+          var pls = [];
+          var mobj = {};
+          mobj[name] = videos;
+          chrome.storage.sync.set(mobj, function() {
+            pls.push(name);
+            chrome.storage.sync.set({'allPlaylists': pls}, function(){
+              fillLoadlist();
+              notif("Playlist created");
+            });
+          });  
+        }
+        else
+        {
+          var pls = data.allPlaylists;
+          if(pls.indexOf(name)==-1){
+            var mobj = {};
+            mobj[name] = videos;
+            chrome.storage.sync.set(mobj, function() {
+              pls.push(name);
+              chrome.storage.sync.set({'allPlaylists': pls}, function(){
+                fillLoadlist();
+                notif("Playlist created");
+              });
+            });
+          }
+          else{
+            notif("Conflicting name with some local playlist.");
+          }
+        }
+      });
+    }
+}
+
 function loadDataInStore(name)
 {
   var store = document.getElementById("loadStore");
@@ -623,7 +667,7 @@ function loadDataInStore(name)
       for(var i=0; i< data.length; i++)
       {
         store.innerHTML += "<div class='storeEachTile' name ='"+data[i].name+"'><div class='storeEachList'>"+ data[i].name+
-                            "</div><div class='optionsEach' name ='"+data[i].name+"'><div class='playStoreImage' name='" +data[i].name +
+                            "</div><div class='optionsEachStore' name ='"+data[i].name+"'><div class='playStoreImage' name='" +data[i].name +
                             "' title='Play'>PLAY</div><div class='showImage' name='" +data[i].name+
                             "' title='Show'>View</div><div class='downloadImage' name='"+ 
                              data[i].name +"' title='Download'>Save</div></div></div>";
@@ -634,7 +678,8 @@ function loadDataInStore(name)
         var se = sel[i];
         se.onclick = function() {
           // deletePlaylist(this.getAttribute('name'));
-          console.log("download it");
+          let pl_name = this.getAttribute('name');
+          savePlaylist( data[data.findIndex(function(each){return each.name == pl_name;})].videos , pl_name);
         }
       }
 
@@ -657,16 +702,16 @@ function loadDataInStore(name)
         }
       }
 
-      $(".optionsEach").css("height","0px");
-      $(".optionsEach").hide();
+      $(".optionsEachStore").css("height","0px");
+      $(".optionsEachStore").hide();
       $(".storeEachTile").click(
         function(){
-          showElementByName( $(".optionsEach"), this.getAttribute("name") );
+          showElementByName( $(".optionsEachStore"), this.getAttribute("name") );
         }
       );
       $(".storeEachTile").mouseleave(
         function(){
-          hideElementByName( $(".optionsEach"), this.getAttribute("name") );
+          hideElementByName( $(".optionsEachStore"), this.getAttribute("name") );
         }
       );
       

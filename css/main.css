@@ -266,7 +266,7 @@ body{
 .loadEachList:hover, .storeEachList:hover{
 	background-color: #DADADA;
 }
-.optionsEach{
+.optionsEachPlaylist, .optionsEachStore{
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
