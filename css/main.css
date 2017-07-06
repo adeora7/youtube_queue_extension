@@ -1,6 +1,9 @@
 body{
 	max-height: 450px;
 }
+.bggray{
+	background-color: #DADADA;
+}
 .row{
 	width: 300px;
 }
@@ -272,10 +275,10 @@ body{
 	justify-content: space-around;
 	align-items: center;
 	width: 90%;
-	margin-top: 2px;
-	padding-bottom: 0px;
 	border: 1px solid #DADADA;
-	border-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	background-color: white;
 }
 
 #notifPopup{
@@ -300,27 +303,24 @@ box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 }
 
 .deleteImage, .editImage, .downloadImage, .showImage, .playImage, .playStoreImage, .uploadImage{
-	height:40px;
+	height: 40px;
 	width: 40px;
 	float: left;
 	display: flex;
 	flex-direction:row;
 	align-items: center;
 	justify-content: center;
-	border:1px solid #DADADA;
 	cursor: pointer;
-	border-radius: 50%;
 	background-color: white;
+	border: 1px solid #DADADA;
+	border-radius: 50%;
 }
 .deleteImage:hover, .editImage:hover, .downloadImage:hover, .showImage:hover, .playImage:hover,.playStoreImage:hover, .uploadImage:hover{
-	background-color: #B1B1B1;
+	border: 1px solid #F27780;
 }
-/*.deleteImage:active, .editImage:active, .downloadImage:active, .showImage:active{
-	background-color: #E4E2E2;
-}*/
 .deleteImage > img, .editImage > img, .downloadImage > img, .showImage >  img, .playImage> img, .playStoreImage> img, .uploadImage> img{
-	width:15px;
-	height:15px;
+	width:20px;
+	height:20px;
 }
 .deleteImage:active, .editImage:active, .downloadImage:active, .showImage:active, .playStoreImage:active{
 	background-color: #E4E2E2;
