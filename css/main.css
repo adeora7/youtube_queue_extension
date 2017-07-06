@@ -476,21 +476,51 @@ box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 
 #info{
 	position: fixed;
-	top:150px;
+	top:100px;
 	z-index:100;
 	background-color: white;
 	width: 90%;
 	margin-left: 5%;
-	max-height:270px; 
-	height: 270px;
+	max-height:350px; 
+	height: 350px;
 
 	-webkit-box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 -moz-box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 }
+#infoHead{
+	border-bottom: 1px solid #DADADA;
+	padding: 2px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+#infoHeadMessage{
+	font-size: 14px;
+	text-align: center;
+	color: #DA262D;
+}
+#infoHeadOptions{
+	color: #4C4C4C;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+}
+.infoHeadOptionsEach{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.infoHeadOptionsEach img{
+	height:30px;
+}
 #info > ul{
-	height:215px;
-	max-height: 215px;
+	height:200px;
+	max-height: 200px;
 	overflow-y:auto;
 }
 #infoClose{
@@ -556,4 +586,7 @@ box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 #github{
 	width:20px;
 	cursor:pointer;
+}
+#starGithub{
+	width: 
 }
