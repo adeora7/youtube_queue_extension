@@ -323,8 +323,8 @@ function fillLoadlist(){
       {
         for(var i = 0; i< data.allPlaylists.length;i++)
         {
-          y.innerHTML += "<div class='loadEachTile' name='"+ data.allPlaylists[i] +"'><div class='loadEachList'>"+
-                          data.allPlaylists[i].substring(0,20) +"</div><div class='optionsEachPlaylist' name='"+ data.allPlaylists[i] +"'><div class='playImage' name='"
+          y.innerHTML += "<div class='loadEachTile' name='"+ data.allPlaylists[i] +"'><div class='loadEachList' title='"+data.allPlaylists[i]+"'>"+
+                          data.allPlaylists[i].substring(0,30) +"</div><div class='optionsEachPlaylist' name='"+ data.allPlaylists[i] +"'><div class='playImage' name='"
                           + data.allPlaylists[i] +"' title='Play'><img src='images/play_gray.png'></div><div class='editImage' name='"
                           + data.allPlaylists[i] +"' title='Edit'><img src='images/edit_gray.png'></div><div class='uploadImage' name='"
                           + data.allPlaylists[i] +"' title='Upload'><img src='images/upload_gray.png'></div><div class='deleteImage' name='"
@@ -665,7 +665,7 @@ function loadDataInStore(name)
         store.innerHTML = "<span id='playlistEmpty'>No results</span>";
       for(var i=0; i< data.length; i++)
       {
-        store.innerHTML += "<div class='storeEachTile' name ='"+data[i].name+"'><div class='storeEachList'>"+ data[i].name+
+        store.innerHTML += "<div class='storeEachTile' name ='"+data[i].name+"'><div class='storeEachList' title='"+data[i].name+"'>"+ data[i].name.substring(0,30)+
                             "</div><div class='optionsEachStore' name ='"+data[i].name+"'><div class='playStoreImage' name='" +data[i].name +
                             "' title='Play'><img src='images/play_gray.png'></div><div class='showImage' name='" +data[i].name+
                             "' title='Show'><img src='images/folder_empty_gray.png'></div><div class='downloadImage' name='"+ 
@@ -706,11 +706,13 @@ function loadDataInStore(name)
       $(".storeEachTile").click(
         function(){
           showElementByName( $(".optionsEachStore"), this.getAttribute("name") );
+          $(".storeEachList", this).toggleClass('bggray');
         }
       );
       $(".storeEachTile").mouseleave(
         function(){
           hideElementByName( $(".optionsEachStore"), this.getAttribute("name") );
+          $(".storeEachList", this).removeClass('bggray');
         }
       );
       
