@@ -738,7 +738,10 @@ apb.addEventListener('click', function(){
 
 ssb.addEventListener('click', function(){
   var nn = document.getElementById("searchStoreName").value;
-  loadDataInStore(nn);
+  if(nn.length > 0)
+    loadDataInStore(nn);
+  else
+    notif("Please enter something to search");
 }, false);
 
 $("#addPlaylistName").keypress(function(e) {
@@ -780,5 +783,4 @@ $(document).ready(function(){
   $("#layer").hide();
   $("#editWindow").hide();
   $("#info").hide();
-  loadDataInStore("Laho");
 });
