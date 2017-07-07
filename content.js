@@ -229,8 +229,9 @@ function notif(data){
   var notif = document.getElementById("notifPopup");
   notif.innerHTML = data;
   notif.style.bottom = "10px";
+  var move = notif.offsetHeight + 10;
   setTimeout(function(){
-    notif.style.bottom = "-40px";
+    notif.style.bottom = "-" + move + "px";
   }, 2000);
 
 }

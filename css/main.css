@@ -284,7 +284,7 @@ body{
 #notifPopup{
 	position: fixed;
 	width: 80%;
-	height:30px;
+	min-height:30px;
 	line-height: 30px;
 	text-align: center;
 	background-color: white;
