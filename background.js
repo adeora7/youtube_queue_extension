@@ -89,26 +89,39 @@ function validateYouTubeUrl(url)
             }
         }
 }
-function addtodisplay(name, url)
+function addtodisplay(name, url, viewCount, duration)
 {
-	       var data = {"name":name, "url":url};
+	       var data = {"name":name, "url":url, "views": viewCount, "duration": duration};
          main.songs.push(data);
          
 }
 
-var getJson = function(url){
+var getJson = function(url, callback){
   var s = url.split("/watch?v=");
   var first = "https://www.googleapis.com/youtube/v3/videos?id=";
-  var second = "&key=AIzaSyDNwkpSo1Jyb6Yo3LDyHH1xm7Syfe2NWQg&part=snippet";
+  var second = "&key=AIzaSyDNwkpSo1Jyb6Yo3LDyHH1xm7Syfe2NWQg&part=snippet,statistics,contentDetails";
   var new_url = first + s[1] + second;
 
   var x = new XMLHttpRequest();
   x.open('get', new_url, true);
   x.responseType = 'json';
   x.onreadystatechange = function() {
-  if (x.readyState == 4 && x.status == 200) {
-    var the_name = x.response.items[0].snippet.title;
-    addtodisplay(the_name, url);
+    if (x.readyState == 4 && x.status == 200) {
+      var the_name = x.response.items[0].snippet.title;
+      var viewCount = x.response.items[0].statistics.viewCount;
+      var str = x.response.items[0].contentDetails.duration;
+      var duration = "--";
+      if(   (str.split('H')).length==1 )
+        var duration = (str.split('M')[0]).substring(2) + "min " + (str.split('M')[1]).split('S')[0] + "sec";
+      else
+      {
+        var duration =  (str.split('H')[0]).substring(2)+ "hrs " +
+                        (str.split('H')[1]).split('M')[0] + "min " +
+                        (str.split('H')[1]).split('M')[1].split('S')[0] + "sec";
+      }
+      addtodisplay(the_name, url, viewCount, duration);
+      if(callback)
+        callback();
     }
   };
     x.send();
@@ -201,5 +214,13 @@ chrome.runtime.onMessage.addListener(
     else if(request.greeting == "empty_queue"){
       empty_queue();
       sendResponse({res: "Queue is now empty."});
+    }
+    else if(request.greeting == "playFeatured"){
+      getJson(request.url, function(){
+                            if(main.tab_create==0)
+                              createTab();
+                            playSpecificVideo( main.songs.length-1 );
+                          } );
+      sendResponse({res: "Featured video playing."});
     }
   });

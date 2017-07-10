@@ -170,16 +170,40 @@ function refresh(){
       var xyz = document.getElementById('number');
     	xyz.innerHTML = songs.length;
     	for (var i = 0; i < songs.length ; i++) {
-    		if(i==curr)
-          a.innerHTML +=  "<div class='songEach'><span class='play playingThis' songId='"+ i +"' title='play'>" + songs[i].name.substring(0, 25) +"..</span><div class='add dropdown-button' songId='"+ i +"' data-activates='dropdown1' title='Choose playlist to add video'>+</div><div class='close' songId='"+ i +"' title='Remove video'>X</div></div>";
-        else
-          a.innerHTML +=  "<div class='songEach'><span class='play' songId='"+ i +"' title='play'>" + songs[i].name.substring(0, 25) +"..</span><div class='add dropdown-button' songId='"+ i +"' data-activates='dropdown1' title='Choose playlist to add video'>+</div><div class='close' songId='"+ i +"' title='Remove video'>X</div></div>";
+    		// if(i==curr)
+      //     a.innerHTML +=  "<div class='songEach'><span class='play playingThis' songId='"+ i +"' title='play'>" + songs[i].name.substring(0, 25) +"..</span><div class='add dropdown-button' songId='"+ i +"' data-activates='dropdown1' title='Choose playlist to add video'>+</div><div class='close' songId='"+ i +"' title='Remove video'>X</div></div>";
+      //   else
+      //     a.innerHTML +=  "<div class='songEach'><span class='play' songId='"+ i +"' title='play'>" + songs[i].name.substring(0, 25) +"..</span><div class='add dropdown-button' songId='"+ i +"' data-activates='dropdown1' title='Choose playlist to add video'>+</div><div class='close' songId='"+ i +"' title='Remove video'>X</div></div>";
       
+        a.innerHTML += "<div class='songEach'>"+
+                          "<div class='songEachName' title='"+songs[i].name+"' songId='"+i+"'>"+
+                            songs[i].name + "</div>"+
+                          "<div class='songEachViews'>"+songs[i].views+" views</div>"+
+                          "<div class='songEachDurationAndOptions'>"+
+                            "<div class='songEachDuration'>"+songs[i].duration+"</div>"+
+                            "<div class='songEachOptions'>"+
+                              "<div class='songEachAdd dropdown-button' data-activates='dropdown1' title='Add to Playlist' songId='"+i+"'>"+
+                                "<img src='images/playlist_gray.png'>"+
+                              "</div>"+
+                              "<div class='verticalRule'></div>"+
+                              "<div class='songEachRemove' title='Remove' songId='"+i+"'>"+
+                                "<img src='images/remove_gray.png'>"+
+                              "</div>"+
+                            "</div>"+
+                          "</div>"+
+                      "</div>";
+      
+        a.innerHTML += "<div class='horizontalRule'></div>";
+      }
+      var allSongsInQueue = $(".songEachName");
+      for (var pc = 0; pc < allSongsInQueue.length; pc++) {
+        if( parseInt(allSongsInQueue[pc].getAttribute('songId'), 10) == curr )
+          $(allSongsInQueue[pc]).addClass("songEachCurrent");
       }
       if(songs.length == 0)
         a.innerHTML = "<span id='playlistEmpty'>Playlist empty.</span>";
       
-      var sel = document.getElementsByClassName('add');
+      var sel = document.getElementsByClassName('songEachAdd');
         for(var i = 0; i < sel.length; i++) {
           var se = sel[i];
           se.onclick = function() {
@@ -191,12 +215,12 @@ function refresh(){
       $(window).click(function() {
         hideP();
       });
-      $('.add').click(function(event){
+      $('.songEachAdd').click(function(event){
         event.stopPropagation();
       });  
 
-      var play = document.getElementsByClassName("play");
-      var close = document.getElementsByClassName("close");
+      var play = document.getElementsByClassName("songEachName");
+      var close = document.getElementsByClassName("songEachRemove");
 
 
       for(i=0;i<play.length;i++)
@@ -222,8 +246,6 @@ function cclear(){
 
   });
 }
-refresh();
-fillLoadlist();
 
 function notif(data){
   var notif = document.getElementById("notifPopup");
@@ -454,7 +476,6 @@ function addVideoToPlaylist(name){
 }
 
 function createNewplaylist(name){
-
     name = name.replace( /'/g, "" );
     if(name.length <=0){
       notif("Please choose a name.");
@@ -471,6 +492,7 @@ function createNewplaylist(name){
             chrome.storage.sync.set({'allPlaylists': pls}, function(){
               fillLoadlist();
               notif("Playlist created");
+              document.getElementById("addPlaylistName").value = "";
             });
           });  
         }
@@ -485,6 +507,7 @@ function createNewplaylist(name){
               chrome.storage.sync.set({'allPlaylists': pls}, function(){
                 fillLoadlist();
                 notif("Playlist created");
+                document.getElementById("addPlaylistName").value = ""; 
               });
             });
           }
@@ -547,9 +570,11 @@ function uploadPlaylist(name){
   }
   else
   {
+    notif("Uploading....");
     chrome.storage.sync.get(name, function(data){
       var sgs = data[name];
       sgs = JSON.stringify(sgs);
+      console.log(sgs);
       var http = new XMLHttpRequest();
       var url = "https://multicultural-drake-14693.herokuapp.com/upload/playlist/";
       var params = "name="+name+"&videos="+sgs;
@@ -658,6 +683,7 @@ function loadDataInStore(name)
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200)
     {
+      document.getElementById("searchStoreName").value = "";
       store.innerHTML = "";
       var data = xhttp.responseText;
       data = JSON.parse(data);
@@ -729,6 +755,49 @@ function githubfunc(){
   });
 }
 
+function getFeaturedPlaylists()
+{
+  var store = document.getElementById("loadStore");
+  store.innerHTML = "<span id='playlistEmpty'>Loading...</span>";
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200)
+    {
+      document.getElementById("searchStoreName").value = "";
+      store.innerHTML = "";
+      var data = xhttp.responseText;
+      data = JSON.parse(data);
+      for (var i = 0; i < data.count; i++) {
+        var eachPlaylist = '<div class="featuredEach" url="'+data.videos[i].url+'">'+
+                            '<div class="featuredEachImage">'+
+                                '<img src="'+data.videos[i].img+'">'+
+                            '</div>'+
+                            '<div class="featuredEachDetails">'+
+                                '<span class="featuredName">'+data.videos[i].name+'</span>'+
+                                '<span class="featuredViews">'+data.videos[i].views+' views</span>'+
+                                '<span class="featuredDuration">'+data.videos[i].duration+'</span>'+
+                            '</div>'+
+                          '</div>';
+        store.innerHTML += eachPlaylist;
+      }
+      store.innerHTML += "<div>Email to deoraabhishek1995@gmail.com to display your video here.</div>";
+      var allFeatured = $(".featuredEach");
+      for (var i = 0; i < allFeatured.length; i++) {
+        allFeatured[i].onclick = function() {
+          chrome.runtime.sendMessage({greeting: "playFeatured", url: this.getAttribute('url')}, function(response) {
+            // alert(response.res);
+            refresh();
+            setTimeout(function(){ refresh(); }, 500);
+          });
+        };
+      }
+      
+    }
+  };
+  xhttp.open("GET", "https://multicultural-drake-14693.herokuapp.com/featured?_=" + new Date().getTime(), true);
+  xhttp.send();
+}
+
 var apb = document.getElementById("addPlaylistButton");
 var ssb = document.getElementById("searchStoreButton");
 
@@ -781,7 +850,10 @@ $("#github").click(function(){
 });
 
 $(document).ready(function(){
+  refresh();
+  fillLoadlist();
   $("#layer").hide();
   $("#editWindow").hide();
   $("#info").hide();
+  getFeaturedPlaylists();
 });

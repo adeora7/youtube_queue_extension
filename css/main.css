@@ -13,8 +13,9 @@ body{
 	min-height: 200px;
 	max-height: 293px;
 	overflow-y:auto;
+	margin-top: 10px;
 }
-#a > div{
+/*#a > div{
 	cursor: pointer;
 	display: flex;
 	flex-direction:row;
@@ -23,7 +24,7 @@ body{
 }
 #a > div span:nth-child(2){
 	margin-left: auto;
-}
+}*/
 .top-each{
 	width:100%;
 	background-color: #DA262D;
@@ -56,12 +57,12 @@ body{
 .control-icon:active{
 	background-color: #D82128;
 }
-.songEach{
+/*.songEach{
 	color:gray;
 	height:37px;
 	line-height: 37px;
 	font-size: 14px;
-}
+}*/
 .playingThis{
 	color:gray;
 	background-color: #ECE7E7;
@@ -589,4 +590,93 @@ box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 }
 #starGithub{
 	width: 
+}
+
+.featuredEach{
+	width: 100%;
+	height: 25%;
+	max-height: 80px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
+	margin-top: 3px;
+	cursor: pointer;
+}
+.featuredEachImage{
+	width: 40%;
+	display: flex;
+	flex-direction: row;
+	height:100%;
+}
+.featuredEachImage> img{
+	width: 100%;
+	height: 100%;
+}
+.featuredEachDetails, .songEach{
+	padding:3px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+.songEach{
+	min-height: 70px;
+}
+.featuredEachDetails{
+	width: 60%;
+}
+.songEachCurrent{
+	color: #DA262D !important;
+}
+.featuredName, .songEachName{
+	font-weight: 500;
+    font-size: 12px;
+    color: #3C3C3C;
+}
+.songEachName{
+	cursor:pointer;
+}
+.featuredViews, .songEachViews{
+	color: #636262;
+}
+.featuredDuration, .songEachDuration{
+	margin-top: auto;
+}
+.songEachDurationAndOptions{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: flex-end;
+	width: 100%;
+}
+.songEachOptions{
+	display: flex;
+	flex-direction: row;
+	margin-left: auto;
+	margin-right: 20px;
+}
+.songEachAdd, .songEachRemove{
+	width: 20px;
+	height:20px;
+	cursor: pointer;
+	margin-left: auto;
+	margin-right: 5px;
+}
+.songEachRemove{
+	margin-left: 5px;
+}
+.songEachAdd > img, .songEachRemove > img{
+	width: 100%;
+	height: 100%;
+}
+.verticalRule{
+	border-right: 1px solid gray;
+}
+.horizontalRule{
+	border-top: 1px solid #B5B5B5;
+	width: 90%;
+	margin-left: 5%;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
