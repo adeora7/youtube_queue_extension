@@ -17,7 +17,7 @@ window.addEventListener("getChromeData", function(evt) {
   //background script play next video
   chrome.storage.sync.get("youtube_queue_extension_toggle", function(data){
     chrome.runtime.sendMessage({greeting: "next_video", toggle : data["youtube_queue_extension_toggle"]}, function(response) {
-      alert("yes");
+      // alert("yes");
       refresh();
     });
   });
