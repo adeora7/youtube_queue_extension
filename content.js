@@ -163,6 +163,7 @@ function refresh(){
     	var main = response.res;
       songs = main.songs;
       var curr = response.curr;
+      console.log(curr);
       if(curr == -1)
         curr = songs.length - 1;
     	var a = document.getElementById('a');

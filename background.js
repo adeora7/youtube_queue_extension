@@ -93,7 +93,8 @@ function addtodisplay(name, url, viewCount, duration)
 {
 	       var data = {"name":name, "url":url, "views": viewCount, "duration": duration};
          main.songs.push(data);
-         
+         if(next_video == 0)
+            next_video = main.songs.length-1;
 }
 
 var getJson = function(url, callback){
