@@ -9,6 +9,8 @@ chrome extension to queue youtube songs
 * Add video to any playlists.
 * Create playlists with just one click.
 * Create, edit, delete, load unlimited playlists.
+* An online store where you can share your playlists and find playlists of other users. 
+*Featured Videos. To display your own video in featured videos, email to deoraabhishek1995@gmail.com
 
 
 ### install from chrome webstore
