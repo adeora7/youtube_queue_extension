@@ -574,6 +574,13 @@ function uploadPlaylist(name){
     notif("Uploading....");
     chrome.storage.sync.get(name, function(data){
       var sgs = data[name];
+      for (var i = 0; i < sgs.length; i++) {
+        for (var k in sgs[i]){
+            if (sgs[i].hasOwnProperty(k)) {
+                 sgs[i][k] = sgs[i][k].replace(/[`~!@#$%^&*|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+            }
+        }
+      }
       sgs = JSON.stringify(sgs);
       console.log(sgs);
       var http = new XMLHttpRequest();
