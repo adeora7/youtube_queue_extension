@@ -576,7 +576,7 @@ function uploadPlaylist(name){
       var sgs = data[name];
       for (var i = 0; i < sgs.length; i++) {
         for (var k in sgs[i]){
-            if (sgs[i].hasOwnProperty(k)) {
+            if (sgs[i].hasOwnProperty(k) && k!="url") {
                  sgs[i][k] = sgs[i][k].replace(/[`~!@#$%^&*|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
             }
         }
