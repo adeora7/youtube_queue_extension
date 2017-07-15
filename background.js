@@ -58,11 +58,15 @@ function playSpecificVideo(songnum){
 function removeCertainVideo(songnum){
   //songnum is index
   var curr = next_video-1;
+  if(curr == -1)
+    curr = main.songs.length-1;
   var n = Number(songnum);
   if(n>=0 && n<main.songs.length)
   {
     main.songs.splice(n,1);
-    if(n == curr )
+    if(n == curr  && n == main.songs.length)
+      playSpecificVideo(n-1);
+    else if( n == curr )
       playSpecificVideo(n);
     else if(n<curr){
       next_video = next_video-1;

@@ -85,14 +85,7 @@ var removeSpecific = function(){
   var songId = this.getAttribute("songId");
   this.parentNode.remove();
   songs.splice(songId,1);
-  for(var i = songId;i<close.length;i++)
-  {
-    if(Number(close[i].getAttribute("songId")) >= songId)
-    {
-      close[i].setAttribute("songId", Number(close[i].getAttribute("songId"))-1);
-      play[i].setAttribute("songId", Number(play[i].getAttribute("songId"))-1);
-    }
-  }
+
   var xyz = document.getElementById("number");
   xyz.innerHTML = songs.length;
   chrome.runtime.sendMessage({greeting: "removeSpecific", songid: songId}, function(response) {
@@ -163,7 +156,6 @@ function refresh(){
     	var main = response.res;
       songs = main.songs;
       var curr = response.curr;
-      console.log(curr);
       if(curr == -1)
         curr = songs.length - 1;
     	var a = document.getElementById('a');
