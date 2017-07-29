@@ -85,11 +85,11 @@ function validateYouTubeUrl(url)
             var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
             var match = url.match(regExp);
             if (match && match[2].length == 11) {
-				return 1;
+				return match;
                 	   
             }
             else {
-                return 0;
+                return undefined;
             }
         }
 }
@@ -102,10 +102,12 @@ function addtodisplay(name, url, viewCount, duration)
 }
 
 var getJson = function(url, callback){
-  var s = url.split("/watch?v=");
+  var s = url[2];
   var first = "https://www.googleapis.com/youtube/v3/videos?id=";
   var second = "&key=AIzaSyDNwkpSo1Jyb6Yo3LDyHH1xm7Syfe2NWQg&part=snippet,statistics,contentDetails";
-  var new_url = first + s[1] + second;
+  var new_url = first + s + second;
+
+  var embedUrl = "https://www.youtube.com/embed/" + s + "?autoplay=1";
 
   var x = new XMLHttpRequest();
   x.open('get', new_url, true);
@@ -124,7 +126,7 @@ var getJson = function(url, callback){
                         (str.split('H')[1]).split('M')[0] + "min " +
                         (str.split('H')[1]).split('M')[1].split('S')[0] + "sec";
       }
-      addtodisplay(the_name, url, viewCount, duration);
+      addtodisplay(the_name, embedUrl, viewCount, duration);
       if(callback)
         callback();
     }
@@ -132,10 +134,11 @@ var getJson = function(url, callback){
     x.send();
 };
 
-function somefunction(info, tab){
-	if(validateYouTubeUrl(info.linkUrl))
+function someFunctionMaster(url){
+  var valid = validateYouTubeUrl(url);
+  if(validateYouTubeUrl(url))
 	{
-		getJson(info.linkUrl);
+		getJson(valid);
 	}
 	else
 	{
@@ -143,15 +146,12 @@ function somefunction(info, tab){
 	}
 }
 
+function somefunction(info, tab){
+	someFunctionMaster(info.linkUrl);
+}
+
 function somefunction2(info, tab){
-  if(validateYouTubeUrl(tab.url))
-  {
-    getJson(tab.url);
-  }
-  else
-  {
-    alert("invalid url, can't be added");
-  }
+  someFunctionMaster(tab.url);
 }
 
 function empty_queue(){
