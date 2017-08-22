@@ -1,3 +1,5 @@
+console.log("Youtube Queue Extension is active on this tab.");
+
 var ChromeRequest = (function(){
   var requestId = 0;
 
@@ -40,3 +42,6 @@ window.addEventListener("pause_play", function(evt) {
     // alert("hello");
     pp();
 }, false);
+
+var side = document.getElementById("watch7-sidebar-contents");
+side.innerHTML = "<div>Hello world</div>" + side.innerHTML;

@@ -78,21 +78,31 @@ chrome.tabs.onRemoved.addListener(function(tabid){
   if(tabId == tabid)
     main.tab_create = 0;
 });
-
+function checkAttributionLink(url)
+{
+    var regExpAttributionLink = /https:\/\/www.youtube.com\/attribution_link\?a=(.*)&u=\/watch\?v%3D(\w{1,11})(.*)/;
+    var matchAttribution = url.match(regExpAttributionLink);
+    if(matchAttribution)
+    {
+      url = "https://www.youtube.com/watch?v=" + matchAttribution[2];
+    }
+    return url;
+}
 function validateYouTubeUrl(url)
 {
         if (url != undefined || url != '') {
             var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
             var match = url.match(regExp);
+
             if (match && match[2].length == 11) {
-				return 1;
-                	   
+				      return 1;  	   
             }
             else {
                 return 0;
             }
         }
 }
+
 function addtodisplay(name, url, viewCount, duration)
 {
 	       var data = {"name":name, "url":url, "views": viewCount, "duration": duration};
@@ -133,9 +143,10 @@ var getJson = function(url, callback){
 };
 
 function somefunction(info, tab){
-	if(validateYouTubeUrl(info.linkUrl))
+  url = checkAttributionLink(info.linkUrl);
+	if(validateYouTubeUrl(url))
 	{
-		getJson(info.linkUrl);
+		getJson(url);
 	}
 	else
 	{
