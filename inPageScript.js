@@ -42,6 +42,3 @@ window.addEventListener("pause_play", function(evt) {
     // alert("hello");
     pp();
 }, false);
-
-var side = document.getElementById("watch7-sidebar-contents");
-side.innerHTML = "<div>Hello world</div>" + side.innerHTML;
