@@ -194,7 +194,7 @@ function refresh(){
           $(allSongsInQueue[pc]).addClass("songEachCurrent");
       }
       if(songs.length == 0)
-        a.innerHTML = "<span id='playlistEmpty'>Playlist empty.</span>";
+        a.innerHTML = "<span id='playlistEmpty'>Right Click on a Youtube video to add it to queue.</span>";
       
       var sel = document.getElementsByClassName('songEachAdd');
         for(var i = 0; i < sel.length; i++) {
@@ -797,6 +797,17 @@ function getFeaturedPlaylists()
   xhttp.open("GET", "https://multicultural-drake-14693.herokuapp.com/featured?_=" + new Date().getTime(), true);
   xhttp.send();
 }
+
+// //Queue saving functions start
+
+// function saveQueue(currentQueue){
+//   chrome.storage.sync.set({"youtube_queue_extension_queue": currentQueue}, function(){
+//   });
+// }
+
+// //Queue saving functions end
+
+
 
 var apb = document.getElementById("addPlaylistButton");
 var ssb = document.getElementById("searchStoreButton");

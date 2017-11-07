@@ -2,6 +2,23 @@ var main = {
   songs : [],
   tab_create : 0
 }
+
+chrome.storage.sync.get('youtube_queue_extension_queue', function(data){
+  if(data['youtube_queue_extension_queue'] == undefined)
+  {
+    data['youtube_queue_extension_queue'] = [];
+  }
+  else{
+    main.songs = data['youtube_queue_extension_queue'];
+  }
+});
+
+function saveQueue(currentQueue){
+  chrome.storage.sync.set({'youtube_queue_extension_queue': currentQueue}, function(){
+
+  });
+}
+
 var tabId = 0;
 var next_video = 1;
 
@@ -72,6 +89,7 @@ function removeCertainVideo(songnum){
       next_video = next_video-1;
     }
   }
+  saveQueue(main.songs);
 }
 
 chrome.tabs.onRemoved.addListener(function(tabid){
@@ -109,6 +127,7 @@ function addtodisplay(name, url, viewCount, duration)
          main.songs.push(data);
          if(next_video == 0)
             next_video = main.songs.length-1;
+          saveQueue(main.songs);
 }
 
 var getJson = function(url, callback){
@@ -171,6 +190,7 @@ function empty_queue(){
     // removeCertainVideo(0);
     main.songs.splice(0,1);
   }
+  saveQueue(main.songs);
   chrome.tabs.update(tabId, {'url': 'https://www.youtube.com'});
 }
 
@@ -217,6 +237,7 @@ chrome.runtime.onMessage.addListener(
     else if(request.greeting == "loadState")
     {
       main.songs = request.list;
+      saveQueue(main.songs);
       if(main.songs.length > 0)
       {
         playSpecificVideo(0);
@@ -240,3 +261,4 @@ chrome.runtime.onMessage.addListener(
       sendResponse({res: "Featured video playing."});
     }
   });
+
