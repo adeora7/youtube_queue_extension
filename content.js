@@ -16,9 +16,8 @@ window.addEventListener("getChromeData", function(evt) {
   var response = {requestId: request.id};
   //background script play next video
   chrome.storage.sync.get("youtube_queue_extension_toggle", function(data){
-    chrome.runtime.sendMessage({greeting: "next_video", toggle : data["youtube_queue_extension_toggle"]}, function(response) {
-      // alert("yes");
-      refresh();
+    chrome.runtime.sendMessage({greeting: "next_video", toggle : data["youtube_queue_extension_toggle"]}, function(res) {
+      //need to refresh queue but can't call refresh here.
     });
   });
   window.dispatchEvent(new CustomEvent("sendChromeData", {detail: response}));
@@ -150,6 +149,7 @@ load_tooltips();
 
 //refresh function starts
 function refresh(){
+  console.log("hello");
     chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
     	
       localCopy = response.res;
@@ -201,8 +201,12 @@ function refresh(){
           var se = sel[i];
           se.onclick = function() {
             songToAdd = this.getAttribute('songId');
-            $("#dropdown1").addClass("active");
-            $("#dropdown1").css({'display':'block', 'opacity':'1'});
+            hideP();
+            setTimeout(function(){
+              $("#dropdown1").addClass("active");
+              $("#dropdown1").css({'display':'block', 'opacity':'1'});
+            }, 100);
+            
           }
         }
       $(window).click(function() {
