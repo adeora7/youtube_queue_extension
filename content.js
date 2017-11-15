@@ -1,27 +1,7 @@
-//injecting the script
-var s = document.createElement('script');
-s.src = chrome.extension.getURL('inPageScript.js');
-s.onload = function() {
-    this.parentNode.removeChild(this);
-};
-(document.head || document.documentElement).appendChild(s);
-
 var pause_play = 0;
 var load_save = 0 // 0 for save 1 for load
 var songToAdd = -1;
 
-//event listener for video ending
-window.addEventListener("getChromeData", function(evt) {
-  var request = evt.detail;
-  var response = {requestId: request.id};
-  //background script play next video
-  chrome.storage.sync.get("youtube_queue_extension_toggle", function(data){
-    chrome.runtime.sendMessage({greeting: "next_video", toggle : data["youtube_queue_extension_toggle"]}, function(res) {
-      //need to refresh queue but can't call refresh here.
-    });
-  });
-  window.dispatchEvent(new CustomEvent("sendChromeData", {detail: response}));
-}, false);
 //in video controls start
 document.getElementById("play_next").addEventListener('click', play_next, false);
 document.getElementById("pause_play").addEventListener('click', play_pause, false);
