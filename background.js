@@ -260,5 +260,11 @@ chrome.runtime.onMessage.addListener(
                           } );
       sendResponse({res: "Featured video playing."});
     }
+    else if(request.greeting == "addIconClicked"){
+      var urlObj = { 
+        url: request.link
+      };
+      somefunction2("hello", urlObj); 
+    }
   });
 

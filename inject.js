@@ -53,6 +53,12 @@ function addIcon(){
     node.onmouseup = function(){
       this.style.backgroundColor = "red";
     }
+    node.onclick = function(){
+      var link = this.getAttribute("href");
+      chrome.runtime.sendMessage({greeting: "addIconClicked", link : link}, function(res) {
+        //Request sent to add video to queue
+      });
+    }
     thumbs[i].appendChild(node);
   }
   thumbsDone = thumbsDone.concat(thumbs);
