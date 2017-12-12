@@ -78,7 +78,7 @@ body{
 .play:hover{
 	background-color: #ECE7E7;
 }
-#playlistEmpty{
+.playlistEmpty{
 	height: 100px;
 	font-size: 20px;
 	color:#BBB6B6;

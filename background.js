@@ -35,11 +35,7 @@ function createTab(){
 function playNextVideo(){
   chrome.tabs.get(tabId, function(tab){
     var l = main.songs.length;
-    if(l == 0)
-    {
-     chrome.tabs.update(tabId, {'url': 'https://www.youtube.com'});
-    }
-    else
+    if(l > 0)
     {  
      chrome.tabs.update(tabId, {'url': main.songs[next_video].url}); 
     }
@@ -191,7 +187,6 @@ function empty_queue(){
     main.songs.splice(0,1);
   }
   saveQueue(main.songs);
-  chrome.tabs.update(tabId, {'url': 'https://www.youtube.com'});
 }
 
 chrome.contextMenus.create({"title":"Add video to queue", "contexts" : ["link"], 
@@ -212,7 +207,8 @@ chrome.runtime.onMessage.addListener(
     else if(request.greeting == "next_video")
     {
       if(request.toggle == "no_loop" && next_video == 0){
-          chrome.tabs.update(tabId, {'url': 'https://www.youtube.com'});
+          // chrome.tabs.update(tabId, {'url': 'https://www.youtube.com'});
+          sendResponse({res:"No more in the queue videos to play!"});
       }
       else{
         playNextVideo();

@@ -174,7 +174,7 @@ function refresh(){
           $(allSongsInQueue[pc]).addClass("songEachCurrent");
       }
       if(songs.length == 0)
-        a.innerHTML = "<span id='playlistEmpty'>Right Click on a Youtube video to add it to queue.</span>";
+        a.innerHTML = "<span class='playlistEmpty'>Right Click on a Youtube video to add it to queue.</span>";
       
       var sel = document.getElementsByClassName('songEachAdd');
         for(var i = 0; i < sel.length; i++) {
@@ -309,15 +309,15 @@ function fillLoadlist(){
   chrome.storage.sync.get('allPlaylists', function(data){
     if(data.allPlaylists === undefined)
     {
-      y.innerHTML += "<h6 style='color:gray;'>No playlists found</h6>";
-      x.innerHTML += "<h6 style='color:gray;'>No playlists found</h6>";
+      y.innerHTML += "<span class='playlistEmpty'>No playlists found</span>";
+      x.innerHTML += "<span class='playlistEmpty'>No playlists found</span>";
     }
     else
     {
       if(data.allPlaylists.length<=0)
       {
-        y.innerHTML += "<h6 style='color:gray;'>No playlists found</h6>";
-        x.innerHTML += "<h6 style='color:gray;'>No playlists found</h6>";
+        y.innerHTML += "<span class='playlistEmpty'>No playlists found</span>";
+        x.innerHTML += "<span class='playlistEmpty'>No playlists found</span>";
       }
       else
       {
@@ -662,7 +662,7 @@ function savePlaylist(videos, name){
 function loadDataInStore(name)
 {
   var store = document.getElementById("loadStore");
-  store.innerHTML = "<span id='playlistEmpty'>Loading...</span>";
+  store.innerHTML = "<span class='playlistEmpty'>Loading...</span>";
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200)
@@ -673,7 +673,7 @@ function loadDataInStore(name)
       data = JSON.parse(data);
       
       if(data.length == 0)
-        store.innerHTML = "<span id='playlistEmpty'>No results</span>";
+        store.innerHTML = "<span class='playlistEmpty'>No results</span>";
       for(var i=0; i< data.length; i++)
       {
         store.innerHTML += "<div class='storeEachTile' name ='"+data[i].name+"'><div class='storeEachList' title='"+data[i].name+"'>"+ data[i].name.substring(0,30)+
@@ -742,7 +742,7 @@ function githubfunc(){
 function getFeaturedPlaylists()
 {
   var store = document.getElementById("loadStore");
-  store.innerHTML = "<span id='playlistEmpty'>Loading...</span>";
+  store.innerHTML = "<span class='playlistEmpty'>Loading...</span>";
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200)
@@ -782,6 +782,10 @@ function getFeaturedPlaylists()
   xhttp.send();
 }
 
+function displayMessageStoreEmpty(){
+  var store = document.getElementById("loadStore");
+  store.innerHTML = "<span class='playlistEmpty'>Search Something</span>";
+}
 // //Queue saving functions start
 
 // function saveQueue(currentQueue){
@@ -850,5 +854,6 @@ $(document).ready(function(){
   $("#layer").hide();
   $("#editWindow").hide();
   $("#info").hide();
-  getFeaturedPlaylists();
+  // getFeaturedPlaylists();
+  displayMessageStoreEmpty();
 });
