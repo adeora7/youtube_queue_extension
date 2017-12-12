@@ -25,7 +25,8 @@ var next_video = 1;
 function createTab(){
   if(main.songs.length > 0){
     chrome.tabs.create({'url': main.songs[0].url}, function(tab) {
-     tabId = tab.id;
+      tabId = tab.id;
+      chrome.tabs.executeScript(tabId, {file: "videoEnd.js"});
     });
     main.tab_create = 1;
     next_video = 1 % main.songs.length;
