@@ -1,6 +1,6 @@
 var main = {
-  songs : [],
-  tab_create : 0
+  songs : []
+  // tab_create : 0
 }
 
 chrome.storage.sync.get('youtube_queue_extension_queue', function(data){
@@ -19,40 +19,29 @@ function saveQueue(currentQueue){
   });
 }
 
-var tabId = 0;
-var next_video = 1;
+var next_video = -1;
 
-function createTab(){
-  if(main.songs.length > 0){
-    chrome.tabs.create({'url': main.songs[0].url}, function(tab) {
-      tabId = tab.id;
-      chrome.tabs.executeScript(tabId, {file: "videoEnd.js"});
-    });
-    main.tab_create = 1;
-    next_video = 1 % main.songs.length;
+function playNextVideo(tabId){
+  if(next_video == -1)
+  {
+    next_video = 0;
   }
-}
 
-function playNextVideo(){
   chrome.tabs.get(tabId, function(tab){
     var l = main.songs.length;
     if(l > 0)
     {  
-     chrome.tabs.update(tabId, {'url': main.songs[next_video].url}); 
+     chrome.tabs.update(tabId, {'url': main.songs[next_video].url});
     }
     next_video = (next_video+1)%l;
 
   });
 }
 
-function playPreviousVideo(){
+function playPreviousVideo(tabId){
   chrome.tabs.get(tabId, function(tab){
-    if(main.songs.length == 0)
+    if(main.songs.length > 0)
     { 
-      chrome.tabs.update(tabId, {'url': 'https://www.youtube.com'});
-    }
-    else
-    {  
       var l = main.songs.length;
       var prev = (next_video + l-2)%l;
       next_video = (next_video + l-1)%l;
@@ -61,7 +50,7 @@ function playPreviousVideo(){
   });
 }
 
-function playSpecificVideo(songnum){
+function playSpecificVideo(songnum, tabId){
   var n = Number(songnum);
   if(n>=0 && n<main.songs.length)
   {
@@ -69,7 +58,7 @@ function playSpecificVideo(songnum){
     next_video = (n+1)%main.songs.length;
   }
 }
-function removeCertainVideo(songnum){
+function removeCertainVideo(songnum, tabId){
   //songnum is index
   var curr = next_video-1;
   if(curr == -1)
@@ -79,13 +68,15 @@ function removeCertainVideo(songnum){
   {
     main.songs.splice(n,1);
     if(n == curr  && n == main.songs.length)
-      playSpecificVideo(n-1);
+      playSpecificVideo(n-1, tabId);
     else if( n == curr )
-      playSpecificVideo(n);
+      playSpecificVideo(n, tabId);
     else if(n<curr){
       next_video = next_video-1;
     }
   }
+  if(main.songs.length == 0)
+    next_video = -1;
   saveQueue(main.songs);
 }
 
@@ -125,6 +116,8 @@ function addtodisplay(name, url, viewCount, duration)
          if(next_video == 0)
             next_video = main.songs.length-1;
           saveQueue(main.songs);
+
+          refresh();
 }
 
 var getJson = function(url, callback){
@@ -141,16 +134,14 @@ var getJson = function(url, callback){
       var the_name = x.response.items[0].snippet.title;
       var viewCount = x.response.items[0].statistics.viewCount;
       var str = x.response.items[0].contentDetails.duration;
-      var duration = "--";
-      if(   (str.split('H')).length==1 )
-        var duration = (str.split('M')[0]).substring(2) + "min " + (str.split('M')[1]).split('S')[0] + "sec";
-      else
-      {
-        var duration =  (str.split('H')[0]).substring(2)+ "hrs " +
-                        (str.split('H')[1]).split('M')[0] + "min " +
-                        (str.split('H')[1]).split('M')[1].split('S')[0] + "sec";
-      }
-      addtodisplay(the_name, url, viewCount, duration);
+      
+      str = str.substr(2);
+      str = str.replace("H", "hrs ");
+      str = str.replace("M", "mins ");
+      str = str.replace("S", "sec");
+      str = str.trim();
+      
+      addtodisplay(the_name, url, viewCount, str);
       if(callback)
         callback();
     }
@@ -188,6 +179,7 @@ function empty_queue(){
     main.songs.splice(0,1);
   }
   saveQueue(main.songs);
+  next_video = -1;
 }
 
 chrome.contextMenus.create({"title":"Add video to queue", "contexts" : ["link"], 
@@ -196,39 +188,44 @@ chrome.contextMenus.create({"title":"Add video to queue", "contexts" : ["link"],
 chrome.contextMenus.create({"title":"Add video to queue", "contexts" : ["video"], 
   "onclick": somefunction2});
 
+chrome.tabs.onUpdated.addListener( function (tId, changeInfo, tab) {
+    if (changeInfo.status === 'complete') {
+      chrome.tabs.executeScript(tId, {file: "videoEnd.js"});
+    }
+})
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.greeting == "hello")
       sendResponse({res: main, curr : next_video-1});
-    else if(request.greeting == "create_tab"){
-      createTab();
-      sendResponse({res:"new tab created"});
-    }
+    // else if(request.greeting == "create_tab"){
+    //   createTab();
+    //   sendResponse({res:"new tab created"});
+    // }
     else if(request.greeting == "next_video")
     {
       if(request.toggle == "no_loop" && next_video == 0){
           // chrome.tabs.update(tabId, {'url': 'https://www.youtube.com'});
-          sendResponse({res:"No more in the queue videos to play!"});
+          sendResponse({res:"No more videos in the queue to play!"});
       }
       else{
-        playNextVideo();
+        playNextVideo(sender.tab.id);
         sendResponse({res:"next video playing"});
       }
     }
     else if(request.greeting == "previous_video")
     {
-      playPreviousVideo();
+      playPreviousVideo(sender.tab.id);
       sendResponse({res: "previous video playing"});
     }
     else if(request.greeting == "playSpecific")
     {
-      playSpecificVideo(request.songid);
+      playSpecificVideo(request.songid, sender.tab.id);
       sendResponse({res:"playing specific video"});
     }
     else if(request.greeting == "removeSpecific")
     {
-      removeCertainVideo(request.songid);
+      removeCertainVideo(request.songid, sender.tab.id);
       sendResponse({res:"removed specific video"});
     }
     else if(request.greeting == "loadState")
@@ -237,26 +234,22 @@ chrome.runtime.onMessage.addListener(
       saveQueue(main.songs);
       if(main.songs.length > 0)
       {
-        playSpecificVideo(0);
+        playSpecificVideo(0, sender.tab.id);
       }
       sendResponse({res:"state loaded"});
-    }
-    else if(request.greeting == "pp")
-    {
-      sendResponse({res:tabId});
     }
     else if(request.greeting == "empty_queue"){
       empty_queue();
       sendResponse({res: "Queue is now empty."});
     }
-    else if(request.greeting == "playFeatured"){
-      getJson(request.url, function(){
-                            if(main.tab_create==0)
-                              createTab();
-                            playSpecificVideo( main.songs.length-1 );
-                          } );
-      sendResponse({res: "Featured video playing."});
-    }
+    // else if(request.greeting == "playFeatured"){
+    //   getJson(request.url, function(){
+    //                         if(main.tab_create==0)
+    //                           createTab();
+    //                         playSpecificVideo( main.songs.length-1 );
+    //                       } );
+    //   sendResponse({res: "Featured video playing."});
+    // }
     else if(request.greeting == "addIconClicked"){
       var urlObj = { 
         url: request.link
@@ -265,3 +258,11 @@ chrome.runtime.onMessage.addListener(
     }
   });
 
+// Sending messages
+function refresh(){
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {greeting: "refresh"}, function(response) {
+      // console.log(response.farewell);
+    });
+  });
+}

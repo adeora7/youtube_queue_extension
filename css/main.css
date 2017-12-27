@@ -1,11 +1,37 @@
-body{
+#ytbPlayerWrapper{
+	z-index:100000;
+	position:fixed;
+	top:113px;
+	right: -329px;
+	transition: right 0.3s;
+	width: 350px;
+	border: 1px solid #E1E1E1;
+}
+#youtubeQueuePlayer {
+	background-color:white;
+	height: 450px;
 	max-height: 450px;
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 0px !important;
+}
+#ytbName{
+	width:30px;
+	overflow: none;
+	height: 100%;
+	background-color: #DA262D;
+	color:white;
+	padding:5px;
+	text-align: center;
 }
 .bggray{
 	background-color: #DADADA;
 }
 .row{
-	width: 300px;
+	width: 350px;
+}
+#test1, #test2, #test3{
+	width: 328px;
 }
 #a{
 	display: flex;
@@ -15,16 +41,6 @@ body{
 	overflow-y:auto;
 	margin-top: 10px;
 }
-/*#a > div{
-	cursor: pointer;
-	display: flex;
-	flex-direction:row;
-	justify-content:flex-start;
-	min-height: 37px;
-}
-#a > div span:nth-child(2){
-	margin-left: auto;
-}*/
 .top-each{
 	width:100%;
 	background-color: #DA262D;
@@ -43,7 +59,6 @@ body{
 	justify-content:space-around;
 	padding-top: 5px;
 	padding-bottom: 5px;
-
 }
 .control-icon{
 	padding: 10px;
@@ -283,7 +298,8 @@ body{
 }
 
 #notifPopup{
-	position: fixed;
+	display: none;
+	position: absolute;
 	width: 80%;
 	min-height:30px;
 	line-height: 30px;
@@ -400,18 +416,17 @@ input:focus{
 	border:0px solid white;
 	padding:0px;
 }
-.dropdown-content{
+.ytedropdown-content{
 	width:150px !important;
 	max-height: 300px !important;
 }
-
 #editWindow{
 	z-index:10;
 	width:80%;
 	margin-left: 10%; 
 	min-height: 100px;
 	max-height: 280px; 
-	position: fixed;
+	position: absolute;
 	top:150px;
 	background-color: white;
 	border-radius: 5px;
@@ -475,21 +490,22 @@ box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 	background-color: #DA262D;
 }
 
-#info{
-	position: fixed;
-	top:100px;
+#yteinfo{
+	display: none;
+	position: absolute;
+	top:40px;
 	z-index:100;
 	background-color: white;
 	width: 90%;
 	margin-left: 5%;
-	max-height:350px; 
-	height: 350px;
+	max-height:400px; 
+	height: 90%;
 
 	-webkit-box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 -moz-box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 }
-#infoHead{
+#yteinfoHead{
 	border-bottom: 1px solid #DADADA;
 	padding: 2px;
 	display: flex;
@@ -497,12 +513,12 @@ box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 	justify-content: center;
 	align-items: center;
 }
-#infoHeadMessage{
+#yteinfoHeadMessage{
 	font-size: 14px;
 	text-align: center;
 	color: #DA262D;
 }
-#infoHeadOptions{
+#yteinfoHeadOptions{
 	color: #4C4C4C;
 	display: flex;
 	flex-direction: row;
@@ -510,21 +526,21 @@ box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 	align-items: center;
 	width: 100%;
 }
-.infoHeadOptionsEach{
+.yteinfoHeadOptionsEach{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
-.infoHeadOptionsEach img{
+.yteinfoHeadOptionsEach img{
 	height:30px;
 }
-#info > ul{
-	height:200px;
-	max-height: 200px;
+#yteinfo > ul{
+	height:100%;
+	max-height: 360px;
 	overflow-y:auto;
 }
-#infoClose{
+#yteinfoClose{
 	height:35px;
 	line-height: 35px;
 	cursor:pointer;
@@ -534,7 +550,7 @@ box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 	color:#4C4C4C;
 	font-size: 15px;
 }
-#info > ul > li{
+#yteinfo > ul > li{
 	font-size: 14px;
 	padding: 5px;
 	color:#4C4C4C;
@@ -554,13 +570,14 @@ box-shadow: 0px 0px 9px 0px rgba(158,152,158,1);
 }
 
 #layer{
+	display: none;
 	position: absolute;
 	color:transparent;
 	background-color: black;
 	opacity: 0.7;
 	z-index: 10;
 	width: 100%;
-	height: 100%;
+	height: 450px;
 }
 .tabs{
 	width: 90% !important;

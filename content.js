@@ -24,12 +24,7 @@ function play_next(){
 }
 function play_pause()
 {
-  chrome.runtime.sendMessage({greeting: "pp"}, function(response){
-    chrome.tabs.executeScript(response.res, {
-        code: 'document.querySelector(".ytp-play-button").click()'
-      }, function() {
-    });
-  });
+  document.querySelector(".ytp-play-button").click();
 }
 function play_previous()
 {
@@ -129,7 +124,7 @@ load_tooltips();
 
 //refresh function starts
 function refresh(){
-  console.log("hello");
+  // console.log("hello");
     chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
     	
       localCopy = response.res;
@@ -156,11 +151,11 @@ function refresh(){
                             "<div class='songEachDuration'>"+songs[i].duration+"</div>"+
                             "<div class='songEachOptions'>"+
                               "<div class='songEachAdd dropdown-button' data-activates='dropdown1' title='Add to Playlist' songId='"+i+"'>"+
-                                "<img src='images/playlist_gray.png'>"+
+                                "<img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/playlist_gray.png'>"+
                               "</div>"+
                               "<div class='verticalRule'></div>"+
                               "<div class='songEachRemove' title='Remove' songId='"+i+"'>"+
-                                "<img src='images/remove_gray.png'>"+
+                                "<img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/remove_gray.png'>"+
                               "</div>"+
                             "</div>"+
                           "</div>"+
@@ -174,7 +169,7 @@ function refresh(){
           $(allSongsInQueue[pc]).addClass("songEachCurrent");
       }
       if(songs.length == 0)
-        a.innerHTML = "<span class='playlistEmpty'>Right Click on a Youtube video to add it to queue.</span>";
+        a.innerHTML = "<span class='playlistEmpty'>Click on the small icon on left-top side of Youtube video thumbnail to add it to queue.</span>";
       
       var sel = document.getElementsByClassName('songEachAdd');
         for(var i = 0; i < sel.length; i++) {
@@ -206,13 +201,7 @@ function refresh(){
         close[i].addEventListener('click', removeSpecific, false);
       }
 
-      if(main.tab_create == 0 && songs.length > 0)
-      {
-
-        chrome.runtime.sendMessage({greeting: "create_tab"}, function(response) {
-          //alert(response.res);
-        });
-      }
+      
       fillLoadlist();
     });
 
@@ -227,10 +216,12 @@ function cclear(){
 function notif(data){
   var notif = document.getElementById("notifPopup");
   notif.innerHTML = data;
+  notif.style.display = "block";
   notif.style.bottom = "10px";
   var move = notif.offsetHeight + 10;
   setTimeout(function(){
     notif.style.bottom = "-" + move + "px";
+    notif.style.display = "none";
   }, 2000);
 
 }
@@ -270,7 +261,7 @@ function populateSongs(name){
       if(sgs.length == 0)
         el.innerHTML = "<span style='font-size:16px;color:gray;'>Playlist empty.</span>";
       for(var i = 0; i < sgs.length; i++){
-        el.innerHTML += "<div class='editEach'><div class='editEachName' title='"+sgs[i].name+"'>"+ sgs[i].name.substring(0, 25) +"</div><div class='editEachIcon' title='Remove video' songId='"+ i +"'><img src='images/wdelete.png'></div></div>";
+        el.innerHTML += "<div class='editEach'><div class='editEachName' title='"+sgs[i].name+"'>"+ sgs[i].name.substring(0, 25) +"</div><div class='editEachIcon' title='Remove video' songId='"+ i +"'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/wdelete.png'></div></div>";
       }
       var sel = document.getElementsByClassName('editEachIcon');
       for(var i = 0; i < sel.length; i++) {
@@ -301,7 +292,7 @@ function showStorePlaylist(sgs, name){
 function fillLoadlist(){
   var z = document.getElementById("yo");
   z.innerHTML = "";
-  z.innerHTML = "<ul id='dropdown1' class='dropdown-content'></ul>";
+  z.innerHTML = "<ul id='dropdown1' class='ytedropdown-content'></ul>";
   var y = document.getElementById("loadBody");
   var x = document.getElementById("dropdown1");
   y.innerHTML = "";
@@ -325,10 +316,10 @@ function fillLoadlist(){
         {
           y.innerHTML += "<div class='loadEachTile' name='"+ data.allPlaylists[i] +"'><div class='loadEachList' title='"+data.allPlaylists[i]+"'>"+
                           data.allPlaylists[i].substring(0,30) +"</div><div class='optionsEachPlaylist' name='"+ data.allPlaylists[i] +"'><div class='playImage' name='"
-                          + data.allPlaylists[i] +"' title='Play'><img src='images/play_gray.png'></div><div class='editImage' name='"
-                          + data.allPlaylists[i] +"' title='Edit'><img src='images/edit_gray.png'></div><div class='uploadImage' name='"
-                          + data.allPlaylists[i] +"' title='Upload'><img src='images/upload_gray.png'></div><div class='deleteImage' name='"
-                          + data.allPlaylists[i] +"' title='Delete'><img src='images/delete_gray.png'></div></div></div>";
+                          + data.allPlaylists[i] +"' title='Play'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/play_gray.png'></div><div class='editImage' name='"
+                          + data.allPlaylists[i] +"' title='Edit'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/edit_gray.png'></div><div class='uploadImage' name='"
+                          + data.allPlaylists[i] +"' title='Upload'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/upload_gray.png'></div><div class='deleteImage' name='"
+                          + data.allPlaylists[i] +"' title='Delete'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/delete_gray.png'></div></div></div>";
           
           x.innerHTML += "<li><a href='#!' class='dropEachList' name='"+ data.allPlaylists[i] +"'>"+
                          data.allPlaylists[i].substring(0, 12) +"</a></li>";
@@ -678,9 +669,9 @@ function loadDataInStore(name)
       {
         store.innerHTML += "<div class='storeEachTile' name ='"+data[i].name+"'><div class='storeEachList' title='"+data[i].name+"'>"+ data[i].name.substring(0,30)+
                             "</div><div class='optionsEachStore' name ='"+data[i].name+"'><div class='playStoreImage' name='" +data[i].name +
-                            "' title='Play'><img src='images/play_gray.png'></div><div class='showImage' name='" +data[i].name+
-                            "' title='Show'><img src='images/folder_empty_gray.png'></div><div class='downloadImage' name='"+ 
-                             data[i].name +"' title='Download'><img src='images/download_gray.png'></div></div></div>";
+                            "' title='Play'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/play_gray.png'></div><div class='showImage' name='" +data[i].name+
+                            "' title='Show'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/folder_empty_gray.png'></div><div class='downloadImage' name='"+ 
+                             data[i].name +"' title='Download'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/download_gray.png'></div></div></div>";
       } 
 
       var sel = document.getElementsByClassName('downloadImage');
@@ -831,7 +822,7 @@ $(window).click(function() {
 
 $("#howToUse").click(function(){
   $("#layer").fadeIn("fast");
-  $("#info").fadeIn("medium");
+  $("#yteinfo").fadeIn("medium");
 });
 
 $("#editWindowDone").click(function(){
@@ -839,8 +830,8 @@ $("#editWindowDone").click(function(){
   $("#layer").fadeOut("fast");
 });
 
-$("#infoClose").click(function(){
-  $("#info").fadeOut("medium");
+$("#yteinfoClose").click(function(){
+  $("#yteinfo").fadeOut("medium");
   $("#layer").fadeOut("fast");
 });
 
@@ -850,10 +841,20 @@ $("#github").click(function(){
 
 $(document).ready(function(){
   refresh();
-  fillLoadlist();
+  // fillLoadlist();
   $("#layer").hide();
   $("#editWindow").hide();
-  $("#info").hide();
+  $("#yteinfo").hide();
   // getFeaturedPlaylists();
   displayMessageStoreEmpty();
 });
+
+// Listening to messages from background script
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if (request.greeting == "refresh"){
+      refresh();
+      // sendResponse({farewell: "Thanks"});
+    }
+  });
