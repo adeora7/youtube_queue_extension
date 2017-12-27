@@ -79,19 +79,19 @@ player.innerHTML = `<div id="ytbPlayerWrapper"><div class="row" id="youtubeQueue
             <div>
             <div id="controls">
               <div class="control-icon tooltipped" data-position="bottom" data-delay="50" data-tooltip="Previous" id="play_previous">
-                <img src="chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/wprevious.png">
+                <img src="chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/wprevious.png">
               </div>
               <div class="control-icon tooltipped" data-position="bottom" data-delay="50" data-tooltip="Play/Pause" id="pause_play">
-                <img src="chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/wplay_pause.png">
+                <img src="chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/wplay_pause.png">
               </div>
               <div class="control-icon tooltipped" data-position="bottom"  data-delay="50" data-tooltip="Next" id="play_next">
-                <img src="chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/wnext.png">
+                <img src="chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/wnext.png">
               </div>
                     <div class="control-icon tooltipped" data-position="bottom"  data-delay="50" data-tooltip="Loop" id="loop_all">
-                        <img src="chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/loop-all.png">
+                        <img src="chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/loop-all.png">
                     </div>
                     <div class="control-icon tooltipped" data-position="bottom" data-delay="50" data-tooltip="Empty Queue" id="empty">
-                        <img src="chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/empty.png">
+                        <img src="chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/empty.png">
                     </div>
             </div>
             <div>
@@ -102,7 +102,7 @@ player.innerHTML = `<div id="ytbPlayerWrapper"><div class="row" id="youtubeQueue
                       <li class="tab col s4"><a class="active" href="#test2">Queue(<span id="number">0</span>)</a></li>
                     </ul>
                         <div id="howToUse" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="How to use ?">
-                            <img src="chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/winfo1.png">
+                            <img src="chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/winfo1.png">
                         </div>
                 </div>
                     <div id="test3" class="col s12">
@@ -165,7 +165,7 @@ player.innerHTML = `<div id="ytbPlayerWrapper"><div class="row" id="youtubeQueue
                     <span class="number">1.</span>
                     <span>Show your support by staring on Github.
                     <a href="https://github.com/adeora7/youtube_queue_extension" target="_blank">
-                        <img id="starGithub" src="chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/star_github.png">
+                        <img id="starGithub" src="chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/star_github.png">
                     </a>
                     </span>
                 </li>

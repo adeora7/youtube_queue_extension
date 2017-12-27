@@ -151,11 +151,11 @@ function refresh(){
                             "<div class='songEachDuration'>"+songs[i].duration+"</div>"+
                             "<div class='songEachOptions'>"+
                               "<div class='songEachAdd dropdown-button' data-activates='dropdown1' title='Add to Playlist' songId='"+i+"'>"+
-                                "<img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/playlist_gray.png'>"+
+                                "<img src='chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/playlist_gray.png'>"+
                               "</div>"+
                               "<div class='verticalRule'></div>"+
                               "<div class='songEachRemove' title='Remove' songId='"+i+"'>"+
-                                "<img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/remove_gray.png'>"+
+                                "<img src='chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/remove_gray.png'>"+
                               "</div>"+
                             "</div>"+
                           "</div>"+
@@ -261,7 +261,7 @@ function populateSongs(name){
       if(sgs.length == 0)
         el.innerHTML = "<span style='font-size:16px;color:gray;'>Playlist empty.</span>";
       for(var i = 0; i < sgs.length; i++){
-        el.innerHTML += "<div class='editEach'><div class='editEachName' title='"+sgs[i].name+"'>"+ sgs[i].name.substring(0, 25) +"</div><div class='editEachIcon' title='Remove video' songId='"+ i +"'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/wdelete.png'></div></div>";
+        el.innerHTML += "<div class='editEach'><div class='editEachName' title='"+sgs[i].name+"'>"+ sgs[i].name.substring(0, 25) +"</div><div class='editEachIcon' title='Remove video' songId='"+ i +"'><img src='chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/wdelete.png'></div></div>";
       }
       var sel = document.getElementsByClassName('editEachIcon');
       for(var i = 0; i < sel.length; i++) {
@@ -316,10 +316,10 @@ function fillLoadlist(){
         {
           y.innerHTML += "<div class='loadEachTile' name='"+ data.allPlaylists[i] +"'><div class='loadEachList' title='"+data.allPlaylists[i]+"'>"+
                           data.allPlaylists[i].substring(0,30) +"</div><div class='optionsEachPlaylist' name='"+ data.allPlaylists[i] +"'><div class='playImage' name='"
-                          + data.allPlaylists[i] +"' title='Play'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/play_gray.png'></div><div class='editImage' name='"
-                          + data.allPlaylists[i] +"' title='Edit'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/edit_gray.png'></div><div class='uploadImage' name='"
-                          + data.allPlaylists[i] +"' title='Upload'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/upload_gray.png'></div><div class='deleteImage' name='"
-                          + data.allPlaylists[i] +"' title='Delete'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/delete_gray.png'></div></div></div>";
+                          + data.allPlaylists[i] +"' title='Play'><img src='chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/play_gray.png'></div><div class='editImage' name='"
+                          + data.allPlaylists[i] +"' title='Edit'><img src='chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/edit_gray.png'></div><div class='uploadImage' name='"
+                          + data.allPlaylists[i] +"' title='Upload'><img src='chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/upload_gray.png'></div><div class='deleteImage' name='"
+                          + data.allPlaylists[i] +"' title='Delete'><img src='chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/delete_gray.png'></div></div></div>";
           
           x.innerHTML += "<li><a href='#!' class='dropEachList' name='"+ data.allPlaylists[i] +"'>"+
                          data.allPlaylists[i].substring(0, 12) +"</a></li>";
@@ -669,9 +669,9 @@ function loadDataInStore(name)
       {
         store.innerHTML += "<div class='storeEachTile' name ='"+data[i].name+"'><div class='storeEachList' title='"+data[i].name+"'>"+ data[i].name.substring(0,30)+
                             "</div><div class='optionsEachStore' name ='"+data[i].name+"'><div class='playStoreImage' name='" +data[i].name +
-                            "' title='Play'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/play_gray.png'></div><div class='showImage' name='" +data[i].name+
-                            "' title='Show'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/folder_empty_gray.png'></div><div class='downloadImage' name='"+ 
-                             data[i].name +"' title='Download'><img src='chrome-extension://nfohabbemfafpmoahcoipdclfepcgped/images/download_gray.png'></div></div></div>";
+                            "' title='Play'><img src='chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/play_gray.png'></div><div class='showImage' name='" +data[i].name+
+                            "' title='Show'><img src='chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/folder_empty_gray.png'></div><div class='downloadImage' name='"+ 
+                             data[i].name +"' title='Download'><img src='chrome-extension://pgeplakfmipjphmlpnfbeldbficaeack/images/download_gray.png'></div></div></div>";
       } 
 
       var sel = document.getElementsByClassName('downloadImage');
