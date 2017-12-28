@@ -1,7 +1,7 @@
 {
   "name": "Youtube Queue",
   "description": "Allows you to queue youtube videos and plays them for you.",
-  "version": "1.35",
+  "version": "1.37",
   "permissions": ["contextMenus", "tabs", "<all_urls>", "storage"],
   "browser_action" : {
   	"default_icon" : "icon48.png",
@@ -13,8 +13,7 @@
   "content_scripts": [
   {
       "matches": ["https://www.youtube.com/*", "https://m.youtube.com/*"],
-      "js": ["inject.js", "js/jquery.min.js", "js/materialize.min.js", "content.js"],
-      "css": ["css/main.css", "css/materialize.min.css"]
+      "js": ["inject.js"]
   }],
   "manifest_version": 2,
   "icons": {
@@ -22,6 +21,6 @@
           "48": "icon48.png",
           "128": "icon128.png"
         },
-  "web_accessible_resources" : ["images/*"],
+  "web_accessible_resources" : [],
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }

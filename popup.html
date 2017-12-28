@@ -1,6 +1,8 @@
 <html>
 	<head>
-		<link href="css/popup.css" rel="stylesheet">
+		<link href="css/main.css" rel="stylesheet">
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="author" content="Abhishek Deora"/>
         <meta name="keywords" content="Youtube, Queue, Extension, Chrome">
@@ -8,17 +10,176 @@
         <script type="text/javascript" src="popup.js"></script>
 	</head>
 	<body>
-		<div id="main">
-        Your very own <span class="redColor">Youtube Queue</span> has become even better. It is now always active on every youtube tab. Just HOVER over the "youtube queue" bar on the right hand side and the queue manager will show up.
-        <br>
-        <br>
-        There is an icon in top left corner of every video thumbnail. Click on it to add the video to the queue.
-        <br>
-        <br>
-        After adding the videos, you need to click on any one video in the queue to play it and the extension will take it from there.
-        <br>
-        <br>
-        Rest all is same :)
+		<div class="row">
+			<div class="top-each" >
+    			<span style="font-size:15px;">Youtube Queuing Extension</span>
+    		</div>
+    		<div id="controls">
+    			<div class="control-icon tooltipped" data-position="bottom" data-delay="50" data-tooltip="Previous" id="play_previous">
+    				<img src="images/wprevious.png">
+    			</div>
+    			<div class="control-icon tooltipped" data-position="bottom" data-delay="50" data-tooltip="Play/Pause" id="pause_play">
+    				<img src="images/wplay_pause.png">
+    			</div>
+    			<div class="control-icon tooltipped" data-position="bottom"  data-delay="50" data-tooltip="Next" id="play_next">
+    				<img src="images/wnext.png">
+    			</div>
+                <div class="control-icon tooltipped" data-position="bottom"  data-delay="50" data-tooltip="Loop" id="loop_all">
+                    <img src="images/loop-all.png">
+                </div>
+                <div class="control-icon tooltipped" data-position="bottom" data-delay="50" data-tooltip="Empty Queue" id="empty">
+                    <img src="images/empty.png">
+                </div>
+    		</div>
+    		<div class="col s12">
+    		  	<ul class="tabs">
+                    <li class="tab col s4"><a href="#test3">Store</a></li>
+        			<li class="tab col s4"><a href="#test1">Playlists</a></li>
+        			<li class="tab col s4"><a class="active" href="#test2">Queue(<span id="number">0</span>)</a></li>
+      			</ul>
+                <div id="howToUse" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="How to use ?">
+                    <img src="images/winfo1.png">
+                </div>
+    		</div>
+            <div id="test3" class="col s12">
+                <div id="searchStore">
+                    <input type="text" id="searchStoreName" placeholder="Search Playlists">
+                    <input type="submit" value="Seach" id="searchStoreButton">
+                </div>
+                <div id="loadStore">
+
+                </div>
+            </div>
+    		<div id="test1" class="col s12">
+                <div id="addPlaylist">
+                    <input type="text" id="addPlaylistName">
+                    <input type="submit" value="Add Playlist" id="addPlaylistButton">
+                </div>
+    			<div id="loadBody">
+
+                </div>
+    		</div>
+    		<div id="test2" class="col s12">
+    			<div id="yo">
+            
+                </div>
+    			<div id="a">
+
+                </div>
+
+    		</div>
+
+            <div id="layer">
+                a
         </div>
+  		</div>
+        <div id="notifPopup">
+            hello world
+        </div>
+
+        <div id="editWindow">
+            <div id="editWindowHead">
+                PLAYLIST NAME
+            </div>
+            <div id="editWindowBody">
+                
+            </div>
+            <div id="editWindowDone">
+                DONE
+            </div>
+        </div>
+
+        <div id="info">
+            <div id="infoHead">
+                <div id="infoHeadMessage">
+                    Raising Funds for Server cost and Continued Development
+                </div>
+                <div id="infoHeadOptions">
+                    <div class="infoHeadOptionsEach" title="PayPal">
+                        <a href="https://www.paypal.me/adeora7" target="_blank"><img src="images/paypal.png"></a>
+                        <span>Worldwide</span>
+                    </div>
+                    <div class="infoHeadOptionsEach" title="PayTM">
+                        <a href="https://adeora7.github.io/paytm/" target="_blank"><img src="images/paytm.png"></a>
+                        <span>India</span>
+                    </div>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <span class="number"></span>
+                    <span>
+                        <b>Please install 
+                        <a href="https://chrome.google.com/webstore/detail/adblock-plus/cfhdojbkjhnklbpkdaibdccddilifddb" target="_blank">AdblockPlus</a>
+                         for this extension to work properly.</b>
+                    </span>
+                </li>
+                <li>
+                    <span class="number">1.</span>
+                    <span>Show your support by staring on Github.
+                    <a href="https://github.com/adeora7/youtube_queue_extension" target="_blank">
+                        <img id="starGithub" src="images/star_github.png">
+                    </a>
+                    </span>
+                </li>
+                <li>
+                    <span class="number">2.</span>
+                    <span>If the video is currently playing <b>Double right click</b> on it, else <b>Right click</b> on a youtube video thumbnail to add video to the queue.
+                    </span>.
+                </li>
+                <li>
+                    <span class="number">3.</span>
+                    <span>
+                    Store is where playlists of all the users are saved. You can upload yours too. By default store shows featured videos. To add yours, email to <b>deoraabhishek1995@gmail.com</b>
+                    </span>
+                </li>
+                <li>
+                    <span class="number">4.</span>
+                    <span>
+                    Click on any video in Queue to play it. Queue is automatically saved when the browser closes and will resume playing the videos when you open your browser the next time.
+                    </span>
+                </li>
+                <li>
+                    <span class="number">5.</span>
+                    <span>
+                    Click on <b>'+'</b> icon of any video in queue and select the playlist you want the video to be added to.
+                    </span>
+                </li>
+                <li>
+                    <span class="number">6.</span>
+                    <span>
+                    Click on <b>"add playlist"</b> to add an empty playlist.
+                    </span>
+                </li>
+                <li>
+                    <span class="number">7.</span>
+                    <span>
+                    Click on a Playlist to show all the available options.
+                    </span>
+                </li>
+
+                <li>
+                    <span class="number">8.</span>
+                    <span>
+                    Click on Loop icon to toggle it. If turned on, it repeats all the songs in the queue.
+                    </span>
+                </li>
+
+                <li>
+                    <span class="number">9.</span>
+                    <span>
+                    Click on Empty icon to clear the queue.
+                    </span>
+                </li>
+            </ul>
+            <div id="infoClose">
+                Close
+            </div>
+        </div>
+
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+		<script src="content.js"></script>
+        
 	</body>
 </html>
