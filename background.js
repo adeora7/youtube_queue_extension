@@ -29,6 +29,9 @@ function createTab(){
     });
     main.tab_create = 1;
     next_video = 1 % main.songs.length;
+    var left = (main.songs.length-next_video)%main.songs.length + 1;
+    chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 255] });
+    chrome.browserAction.setBadgeText({text: left.toString()});
   }
 }
 
@@ -40,7 +43,9 @@ function playNextVideo(){
      chrome.tabs.update(tabId, {'url': main.songs[next_video].url});
     }
     next_video = (next_video+1)%l;
-
+    var left = (main.songs.length-next_video)%main.songs.length + 1;
+    chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 255] });
+    chrome.browserAction.setBadgeText({text: left.toString()});
   });
 }
 
@@ -52,6 +57,9 @@ function playPreviousVideo(){
       var prev = (next_video + l-2)%l;
       next_video = (next_video + l-1)%l;
       chrome.tabs.update(tabId, {'url': main.songs[prev].url});
+      var left = (main.songs.length-next_video)%main.songs.length + 1;
+      chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 255] });
+      chrome.browserAction.setBadgeText({text: left.toString()});
     }
   });
 }
@@ -62,6 +70,9 @@ function playSpecificVideo(songnum){
   {
     chrome.tabs.update(tabId, {'url': main.songs[n].url});
     next_video = (n+1)%main.songs.length;
+    var left = (main.songs.length-next_video)%main.songs.length + 1;
+    chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 255] });
+    chrome.browserAction.setBadgeText({text: left.toString()});
   }
 }
 function removeCertainVideo(songnum){
@@ -82,6 +93,9 @@ function removeCertainVideo(songnum){
     }
   }
   saveQueue(main.songs);
+  var left = (main.songs.length-next_video)%main.songs.length + 1;
+  chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 255] });
+  chrome.browserAction.setBadgeText({text: left.toString()});
 }
 
 chrome.tabs.onRemoved.addListener(function(tabid){
@@ -118,8 +132,13 @@ function addtodisplay(name, url, viewCount, duration)
 	       var data = {"name":name, "url":url, "views": viewCount, "duration": duration};
          main.songs.push(data);
          if(next_video == 0)
+         {
             next_video = main.songs.length-1;
-          saveQueue(main.songs);
+         }
+         saveQueue(main.songs);
+         var left = (main.songs.length-next_video)%main.songs.length + 1;
+         chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 255] });
+         chrome.browserAction.setBadgeText({text: left.toString()});
 }
 
 var getJson = function(url, callback){
