@@ -93,7 +93,9 @@ function removeCertainVideo(songnum){
     }
   }
   saveQueue(main.songs);
-  var left = (main.songs.length-next_video)%main.songs.length + 1;
+  var left = 0;
+  if( main.songs.length > 0)
+    left = (main.songs.length-next_video)%main.songs.length + 1;
   chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 255] });
   chrome.browserAction.setBadgeText({text: left.toString()});
 }
