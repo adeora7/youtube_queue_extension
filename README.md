@@ -12,6 +12,9 @@ chrome extension to queue youtube songs
 * An online store where you can share your playlists and find playlists of other users. 
 *Featured Videos. To display your own video in featured videos, email to deoraabhishek1995@gmail.com
 
+### Screenshots
+
+<img src="https://lh3.googleusercontent.com/_1kfngtDR_L5IYNKd_29m5bImOXjZku3KpXPNNomrijUZjsXHpLVBBRGW2En_kpdJzie31NWUw=w640-h400-e365" /><br /><br/><img src="https://lh3.googleusercontent.com/9-HalZmAnz5kz4kXPgBX6abPLM52R5JReJ3ZTx-vMlJcbl1i9caVyqDN55cRDiG7w8uJ39mVSfA=w640-h400-e365" /><br />
 
 ### install from chrome webstore
 
