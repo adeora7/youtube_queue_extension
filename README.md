@@ -21,7 +21,7 @@ chrome extension to queue youtube songs
 ```
   https://chrome.google.com/webstore/detail/youtube-queue/pgeplakfmipjphmlpnfbeldbficaeack?hl=en-US&gl=IN
 ```
-https://avatars3.githubusercontent.com/u/33027339?s=400&u=b20b30a3765e6fa9c445db83099280bc60f919d5&v=4
+
 ### or download source from github and load extension in your browser
 
 ## Contributors
