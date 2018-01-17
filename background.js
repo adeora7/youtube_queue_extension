@@ -201,6 +201,7 @@ function empty_queue(){
     // removeCertainVideo(0);
     main.songs.splice(0,1);
   }
+  chrome.browserAction.setBadgeText({text: left.toString()});
   saveQueue(main.songs);
 }
 
