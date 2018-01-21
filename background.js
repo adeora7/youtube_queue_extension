@@ -201,6 +201,8 @@ function empty_queue(){
     // removeCertainVideo(0);
     main.songs.splice(0,1);
   }
+  chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 255] });
+  chrome.browserAction.setBadgeText({text: "0"});
   saveQueue(main.songs);
 }
 
