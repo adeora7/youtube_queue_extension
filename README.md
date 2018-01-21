@@ -28,5 +28,5 @@ chrome extension to queue youtube songs
 
 Thanks goes to these wonderful people for their contributions:
 
-| [<img src="https://avatars3.githubusercontent.com/u/9638595?s=400&v=4" width="100px;"/><br /><sub>Abhishek Deora</sub>](https://github.com/adeora7/) | [<img src="https://avatars0.githubusercontent.com/u/10321682?s=400&v=4" width="100px;"/><br /><sub>Kaustubh Shamshery</sub>](https://github.com/KaustubhShamshery) | [<img src="https://avatars3.githubusercontent.com/u/33183263?s=400&v=4" width="100px;"/><br /><sub>Sneha Mishra</sub>](https://github.com/Tlazypanda) |
+| [<img src="https://avatars3.githubusercontent.com/u/9638595?s=400&v=4" width="100px;"/><br /><sub>Abhishek Deora</sub>](https://github.com/adeora7/) | [<img src="https://avatars0.githubusercontent.com/u/10321682?s=400&v=4" width="100px;"/><br /><sub>Kaustubh Shamshery</sub>](https://github.com/KaustubhShamshery) | [<img src="https://avatars3.githubusercontent.com/u/33183263?s=400&v=4" width="100px;"/><br /><sub>Sneha Mishra</sub>](https://github.com/Tlazypanda) | [<img src="https://avatars3.githubusercontent.com/u/33027339?s=400&u=b20b30a3765e6fa9c445db83099280bc60f919d5&v=4" width="100px;"/><br /><sub>Aditi Aggarwal</sub>](https://github.com/adiagg2000) |
 | :---: | :---: | :---: |
