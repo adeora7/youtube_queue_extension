@@ -151,7 +151,6 @@ function refresh(){
         a.innerHTML += "<div class='songEach'>"+
                           "<div class='songEachName' title='"+songs[i].name+"' songId='"+i+"'>"+
                             songs[i].name + "</div>"+
-                          "<div class='songEachViews'>"+songs[i].views+" views</div>"+
                           "<div class='songEachDurationAndOptions'>"+
                             "<div class='songEachDuration'>"+songs[i].duration+"</div>"+
                             "<div class='songEachOptions'>"+
@@ -758,7 +757,6 @@ function getFeaturedPlaylists()
                             '</div>'+
                             '<div class="featuredEachDetails">'+
                                 '<span class="featuredName">'+data.videos[i].name+'</span>'+
-                                '<span class="featuredViews">'+data.videos[i].views+' views</span>'+
                                 '<span class="featuredDuration">'+data.videos[i].duration+'</span>'+
                             '</div>'+
                           '</div>';

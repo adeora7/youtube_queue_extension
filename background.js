@@ -129,9 +129,9 @@ function validateYouTubeUrl(url)
         }
 }
 
-function addtodisplay(name, url, viewCount, duration)
+function addtodisplay(name, url, duration)
 {
-	       var data = {"name":name, "url":url, "views": viewCount, "duration": duration};
+	       var data = {"name":name, "url":url, "duration": duration};
          main.songs.push(data);
          if(next_video == 0)
          {
@@ -155,7 +155,7 @@ var getJson = function(url, callback){
   x.onreadystatechange = function() {
     if (x.readyState == 4 && x.status == 200) {
       var the_name = x.response.items[0].snippet.title;
-      var viewCount = x.response.items[0].statistics.viewCount;
+      
       var str = x.response.items[0].contentDetails.duration;
       
       str = str.substr(2);
@@ -164,7 +164,7 @@ var getJson = function(url, callback){
       str = str.replace("S", "sec");
       str = str.trim();
       
-      addtodisplay(the_name, url, viewCount, str);
+      addtodisplay(the_name, url, str);
       if(callback)
         callback();
     }
