@@ -148,7 +148,7 @@ function refresh(){
       //   else
       //     a.innerHTML +=  "<div class='songEach'><span class='play' songId='"+ i +"' title='play'>" + songs[i].name.substring(0, 25) +"..</span><div class='add dropdown-button' songId='"+ i +"' data-activates='dropdown1' title='Choose playlist to add video'>+</div><div class='close' songId='"+ i +"' title='Remove video'>X</div></div>";
       
-        a.innerHTML += "<div class='songEach'>"+
+        a.innerHTML += "<div class='songEach ui-state-default'>"+
                           "<div class='songEachName' title='"+songs[i].name+"' songId='"+i+"'>"+
                             songs[i].name + "</div>"+
                           "<div class='songEachDurationAndOptions'>"+
@@ -165,7 +165,7 @@ function refresh(){
                           "</div>"+
                       "</div>";
       
-        a.innerHTML += "<div class='horizontalRule'></div>";
+        // a.innerHTML += "<div class='horizontalRule'></div>";
       }
       var allSongsInQueue = $(".songEachName");
       for (var pc = 0; pc < allSongsInQueue.length; pc++) {
@@ -855,3 +855,25 @@ $(document).ready(function(){
   // getFeaturedPlaylists();
   displayMessageStoreEmpty();
 });
+
+//Queue Reorder
+
+$( function() {
+  $( "#a" ).sortable({
+    stop: onSortingStop
+  });
+  $( "#a" ).disableSelection();
+} );
+
+var onSortingStop = function( event, ui ) {
+  var newPositions = Array();
+  $("#a").children('div').each(function(i, elmnt){
+    if(!$(elmnt).hasClass('ui-sortable-placeholder'))
+    {
+      newPositions.push(elmnt.firstElementChild.getAttribute('songid'));
+    }
+  });
+  console.log(newPositions);
+  //send it to background.js to change the order after this. Should be an easy fix now.
+};
+
