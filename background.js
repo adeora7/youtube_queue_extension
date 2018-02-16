@@ -6,21 +6,57 @@ var main = {
 chrome.storage.sync.get('youtube_queue_extension_queue', function(data){
   if(data['youtube_queue_extension_queue'] == undefined)
   {
-    data['youtube_queue_extension_queue'] = [];
+    // data['youtube_queue_extension_queue'] = [];
+    saveQueue([]);
   }
   else{
     main.songs = data['youtube_queue_extension_queue'];
   }
 });
 
+//New Feature Popup Starts
+//Think about it 
+//New Feature Popup Ends
+
 function saveQueue(currentQueue){
   chrome.storage.sync.set({'youtube_queue_extension_queue': currentQueue}, function(){
-
+    main.songs = currentQueue;
   });
-}
+};
+
 
 var tabId = 0;
 var next_video = 1;
+
+function reorderQueue(newPositions){
+  //change 
+  var current = 0;
+  if(main.songs.length == 1){
+    return;  
+  }
+  console.log(newPositions);
+  console.log("Next video:" + next_video);
+  if(next_video == 0){
+    current = main.songs.length-1;
+  }
+  else
+  {
+    current = next_video-1;
+  }
+  console.log("Current Video" + current);
+  // alert(current); 
+  for(var ghi = 0; ghi<newPositions.length; ghi++){
+    newPositions[ghi] = parseInt(newPositions[ghi]);
+  }
+  current = newPositions.indexOf(current);
+  next_video = (current+1)%main.songs.length;
+  var newQueue = [];
+  for(var i = 0; i<newPositions.length; i++){
+    newQueue.push(main.songs[newPositions[i]]);
+  }
+  // alert(JSON.stringify(newQueue));
+  saveQueue(newQueue);
+};
 
 function createTab(){
   if(main.songs.length > 0){
@@ -74,22 +110,29 @@ function playSpecificVideo(songnum){
     chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 255] });
     chrome.browserAction.setBadgeText({text: left.toString()});
   }
+  else{
+    next_video = 0;
+  }
 }
 function removeCertainVideo(songnum){
-  //songnum is index
   var curr = next_video-1;
   if(curr == -1)
     curr = main.songs.length-1;
-  var n = Number(songnum);
+  var n = Number(songnum); 
   if(n>=0 && n<main.songs.length)
   {
     main.songs.splice(n,1);
-    if(n == curr  && n == main.songs.length)
+    if(n == curr  && n == main.songs.length){
       playSpecificVideo(n-1);
-    else if( n == curr )
+    }
+    else if( n == curr ){
       playSpecificVideo(n);
+    }
     else if(n<curr){
       next_video = next_video-1;
+      if(next_video == -1){
+        next_video = 0;
+      }
     }
   }
   saveQueue(main.songs);
@@ -285,6 +328,11 @@ chrome.runtime.onMessage.addListener(
         url: request.link
       };
       somefunction2("hello", urlObj); 
+    }
+    else if(request.greeting = "queue_reorder"){
+      // alert(JSON.stringify(request.newPositions));
+      reorderQueue(request.newPositions);
+      sendResponse({res: "Order Changed"});
     }
   });
 

@@ -40,7 +40,9 @@ function addIcon(){
     node.onmouseup = function(){
       this.style.backgroundColor = "red";
     }
-    node.onclick = function(){
+    node.onclick = function(event){
+      // console.log(event);
+      event.stopPropagation();
       var link = this.getAttribute("href");
       chrome.runtime.sendMessage({greeting: "addIconClicked", link : link}, function(res) {
         //Request sent to add video to queue

@@ -874,6 +874,11 @@ var onSortingStop = function( event, ui ) {
     }
   });
   console.log(newPositions);
+  
+  chrome.runtime.sendMessage({greeting: "queue_reorder", newPositions: newPositions}, function(response){
+    refresh();
+    console.log("Reording successful");
+  });
   //send it to background.js to change the order after this. Should be an easy fix now.
 };
 
