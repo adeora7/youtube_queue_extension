@@ -129,7 +129,6 @@ load_tooltips();
 
 //refresh function starts
 function refresh(){
-  console.log("hello");
     chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
     	
       localCopy = response.res;
@@ -557,7 +556,6 @@ function uploadPlaylist(name){
         }
       }
       sgs = JSON.stringify(sgs);
-      console.log(sgs);
       var http = new XMLHttpRequest();
       var url = "https://multicultural-drake-14693.herokuapp.com/upload/playlist/";
       var params = "name="+name+"&videos="+sgs;
@@ -873,12 +871,24 @@ var onSortingStop = function( event, ui ) {
       newPositions.push(elmnt.firstElementChild.getAttribute('songid'));
     }
   });
-  console.log(newPositions);
   
   chrome.runtime.sendMessage({greeting: "queue_reorder", newPositions: newPositions}, function(response){
     refresh();
-    console.log("Reording successful");
   });
   //send it to background.js to change the order after this. Should be an easy fix now.
 };
 
+//New feature starts
+chrome.storage.sync.get('youtube_queue_extension_v140', function(data){
+  if(data['youtube_queue_extension_v140'] != undefined){
+    var msg = data['youtube_queue_extension_v140'].split("*");
+    if(Number(msg[0]) > 0){
+      notif( msg[1]);
+      var newMsg = Number(msg[0]-1).toString() + "*" + msg[1];
+      chrome.storage.sync.set({'youtube_queue_extension_v140': newMsg}, function(){
+
+      });
+    }
+  }
+})
+//New feature ends  

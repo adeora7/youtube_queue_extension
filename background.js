@@ -15,7 +15,24 @@ chrome.storage.sync.get('youtube_queue_extension_queue', function(data){
 });
 
 //New Feature Popup Starts
-//Think about it 
+  //add new feature
+chrome.storage.sync.get('youtube_queue_extension_v140', function(data){
+  if(data['youtube_queue_extension_new_v140'] == undefined)
+  {
+    chrome.storage.sync.set({'youtube_queue_extension_v140': '5*Now Drag-Drop the videos in Queue to reorder.'}, function(){
+
+    });
+  }
+});
+
+  //remove old feature
+chrome.storage.sync.get('youtube_queue_extension_v139', function(data){
+  if(!(data['youtube_queue_extension_v139'] == undefined)){
+    chrome.storage.sync.remove('youtube_queue_extension_v139', function(){
+
+    });
+  }
+});
 //New Feature Popup Ends
 
 function saveQueue(currentQueue){
@@ -34,8 +51,6 @@ function reorderQueue(newPositions){
   if(main.songs.length == 1){
     return;  
   }
-  console.log(newPositions);
-  console.log("Next video:" + next_video);
   if(next_video == 0){
     current = main.songs.length-1;
   }
@@ -43,8 +58,6 @@ function reorderQueue(newPositions){
   {
     current = next_video-1;
   }
-  console.log("Current Video" + current);
-  // alert(current); 
   for(var ghi = 0; ghi<newPositions.length; ghi++){
     newPositions[ghi] = parseInt(newPositions[ghi]);
   }
@@ -54,7 +67,6 @@ function reorderQueue(newPositions){
   for(var i = 0; i<newPositions.length; i++){
     newQueue.push(main.songs[newPositions[i]]);
   }
-  // alert(JSON.stringify(newQueue));
   saveQueue(newQueue);
 };
 
@@ -329,10 +341,15 @@ chrome.runtime.onMessage.addListener(
       };
       somefunction2("hello", urlObj); 
     }
-    else if(request.greeting = "queue_reorder"){
-      // alert(JSON.stringify(request.newPositions));
+    else if(request.greeting == "queue_reorder"){
       reorderQueue(request.newPositions);
       sendResponse({res: "Order Changed"});
     }
+    // else if(request.greeting == "new_feature"){
+    //   chrome.storage.sync.get('youtube_queue_extension_v140', function(data){
+    //     sendResponse({feature: data['youtube_queue_extension_v140']});
+    //   });
+    //   // sendResponse({feature: "drag-drop"});
+    // }
   });
 
