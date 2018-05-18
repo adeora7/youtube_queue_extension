@@ -28,8 +28,8 @@
     			<div class="control-icon tooltipped" data-position="bottom"  data-delay="50" data-tooltip="Next" id="play_next">
     				<img src="images/wnext.png">
     			</div>
-                <div class="control-icon tooltipped" data-position="bottom"  data-delay="50" data-tooltip="Loop" id="loop_all">
-                    <img src="images/loop-all.png">
+                <div class="control-icon tooltipped" data-position="bottom"  data-delay="50" data-tooltip="Settings" id="settings">
+                    <img src="images/settings.png">
                 </div>
                 <div class="control-icon tooltipped" data-position="bottom" data-delay="50" data-tooltip="Empty Queue" id="empty">
                     <img src="images/empty.png">
@@ -90,6 +90,49 @@
             </div>
             <div id="editWindowDone">
                 DONE
+            </div>
+        </div>
+
+        <div id="settingsWindow">
+            <div id="settingsWindowHead">
+                
+            </div>
+            <div id="settingsWindowBody">
+                <div class="settingsOptionEach">
+                    <div class="settingsOptionTitle">
+                        Repeat All
+                    </div>
+                    <div class="settingsOptionButton">
+                         <input type="checkbox" id="repeatAll">
+                    </div>
+                </div>
+                <div class="settingsOptionEach">
+                    <div class="settingsOptionTitle">
+                        Show Add Icon on Thumbnails
+                    </div>
+                    <div class="settingsOptionButton">
+                         <input type="checkbox" id="showIcons">
+                    </div>
+                </div>
+                <div class="settingsOptionEach">
+                    <div class="settingsOptionTitle">
+                        Full-Screen Mode
+                    </div>
+                    <div class="settingsOptionButton">
+                         <input type="checkbox" id="fullScreen" disabled>
+                    </div>
+                </div>
+                <div class="settingsOptionEach">
+                    <div class="settingsOptionTitle">
+                        Dark Mode
+                    </div>
+                    <div class="settingsOptionButton">
+                         <input type="checkbox" id="darkMode" disabled>
+                    </div>
+                </div>
+            </div>
+            <div id="settingsWindowDone">
+                
             </div>
         </div>
 
@@ -173,6 +216,12 @@
                     <span class="number">9.</span>
                     <span>
                     Click on Empty icon to clear the queue.
+                    </span>
+                </li>
+                <li>
+                    <span class="number">10.</span>
+                    <span>
+                    Reorder Queue by dragging and dropping the videos in the Queue.
                     </span>
                 </li>
             </ul>

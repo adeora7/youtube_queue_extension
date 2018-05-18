@@ -3,6 +3,16 @@ var main = {
   tab_create : 0
 }
 
+var showIconsToggle = "yes";
+
+function updateShowIconsVariable(){
+  chrome.storage.sync.get( "youtube_queue_extension_show_icons", function(data){
+    if( data["youtube_queue_extension_show_icons"] != undefined)
+      showIconsToggle = data["youtube_queue_extension_show_icons"];
+  });  
+}
+updateShowIconsVariable();
+
 chrome.storage.sync.get('youtube_queue_extension_queue', function(data){
   if(data['youtube_queue_extension_queue'] == undefined)
   {
@@ -344,6 +354,12 @@ chrome.runtime.onMessage.addListener(
     else if(request.greeting == "queue_reorder"){
       reorderQueue(request.newPositions);
       sendResponse({res: "Order Changed"});
+    }
+    else if(request.greeting == "checkShowIconsToggle"){
+      sendResponse({res: showIconsToggle});
+    }
+    else if(request.greeting == "updatedShowIcons"){
+      updateShowIconsVariable();
     }
     // else if(request.greeting == "new_feature"){
     //   chrome.storage.sync.get('youtube_queue_extension_v140', function(data){

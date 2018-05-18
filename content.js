@@ -6,9 +6,14 @@ var songToAdd = -1;
 document.getElementById("play_next").addEventListener('click', play_next, false);
 document.getElementById("pause_play").addEventListener('click', play_pause, false);
 document.getElementById("play_previous").addEventListener('click', play_previous, false);
-document.getElementById("loop_all").addEventListener('click', toggle_loop, false);
+document.getElementById("settings").addEventListener('click', open_settings, false);
 document.getElementById("empty").addEventListener('click', empty_queue, false);
 
+// settings listeners
+document.getElementById("repeatAll").addEventListener('click', toggle_loop, false);
+document.getElementById("showIcons").addEventListener('click', toggle_show_icons, false);
+
+//settings listeners end
 
 function hideP(){
   $("#dropdown1").removeClass("active");
@@ -74,6 +79,15 @@ var removeSpecific = function(){
 
 //popup functions end
 
+//settins 
+function open_settings(){
+  $("#settingsWindowHead").html("Settings");
+  $("#settingsWindowDone").html("Done");
+  $("#layer").fadeIn("fast");
+  $("#settingsWindow").fadeIn("medium");
+}
+//settings ends
+
 //loop functions start
 function toggle_loop(){
   chrome.storage.sync.get("youtube_queue_extension_toggle", function(data){
@@ -85,19 +99,19 @@ function toggle_loop(){
     else{
       if(data["youtube_queue_extension_toggle"] == "loop"){
         chrome.storage.sync.set({"youtube_queue_extension_toggle" : "no_loop"}, function(){
-          $('#loop_all').tooltip('remove');
-          $("#loop_all").attr("data-tooltip", "No Loop");
-          $("#loop_all").tooltip();
-          $("#loop_all").css("opacity", "0.3");
+          // $('#loop_all').tooltip('remove');
+          // $("#loop_all").attr("data-tooltip", "No Loop");
+          // $("#loop_all").tooltip();
+          // $("#loop_all").css("opacity", "0.3");
         });
       }
       else
       {
         chrome.storage.sync.set({"youtube_queue_extension_toggle" : "loop"}, function(){
-          $("#loop_all").tooltip('remove');
-          $("#loop_all").attr("data-tooltip", "Loop");
-          $("#loop_all").tooltip();
-          $("#loop_all").css("opacity", "1");
+          // $("#loop_all").tooltip('remove');
+          // $("#loop_all").attr("data-tooltip", "Loop");
+          // $("#loop_all").tooltip();
+          // $("#loop_all").css("opacity", "1");
         });
       }
     }
@@ -105,6 +119,36 @@ function toggle_loop(){
   });
 }
 //loop functions end
+
+//show icons function
+function toggle_show_icons(){
+  chrome.storage.sync.get("youtube_queue_extension_show_icons", function(data){
+    if(data["youtube_queue_extension_show_icons"] == undefined || (data["youtube_queue_extension_show_icons"] != "no" && data["youtube_queue_extension_show_icons"] != "yes")  ){
+      chrome.storage.sync.set({"youtube_queue_extension_show_icons" : "yes"}, function(){
+
+      });
+    }
+    else{
+      if(data["youtube_queue_extension_show_icons"] == "yes"){
+        chrome.storage.sync.set({"youtube_queue_extension_show_icons" : "no"}, function(){
+          chrome.runtime.sendMessage({greeting: "updatedShowIcons"}, function(res){
+
+          });
+        });
+      }
+      else
+      {
+        chrome.storage.sync.set({"youtube_queue_extension_show_icons" : "yes"}, function(){
+          chrome.runtime.sendMessage({greeting: "updatedShowIcons"}, function(res){
+
+          });
+        });
+      }
+    }
+
+  });
+}
+//show icons function ends
 
 function load_tooltips(){
   chrome.storage.sync.get("youtube_queue_extension_toggle", function(data){
@@ -115,14 +159,27 @@ function load_tooltips(){
     }
     chrome.storage.sync.get("youtube_queue_extension_toggle", function(data){
       if(data["youtube_queue_extension_toggle"] == "no_loop"){
-        $("#loop_all").attr("data-tooltip", "No Loop");
-        $("#loop_all").css("opacity", "0.3");
+        $("#repeatAll").attr("checked", false);
       }
       else
-        $("#loop_all").attr("data-tooltip", "Loop");
+        $("#repeatAll").attr("checked", true);
     });
   });
 
+  chrome.storage.sync.get("youtube_queue_extension_show_icons", function(data){
+    if(data["youtube_queue_extension_show_icons"] == undefined || (data["youtube_queue_extension_show_icons"] != "no" && data["youtube_queue_extension_show_icons"] != "yes")  ){
+      chrome.storage.sync.set({"youtube_queue_extension_show_icons" : "yes"}, function(){
+
+      });
+    }
+    chrome.storage.sync.get("youtube_queue_extension_show_icons", function(data){
+      if(data["youtube_queue_extension_show_icons"] == "no"){
+        $("#showIcons").attr("checked", false);
+      }
+      else
+        $("#showIcons").attr("checked", true);
+    });
+  });
 
 }
 load_tooltips();
@@ -835,6 +892,11 @@ $("#editWindowDone").click(function(){
   $("#layer").fadeOut("fast");
 });
 
+$("#settingsWindowDone").click(function(){
+  $("#settingsWindow").fadeOut("medium");
+  $("#layer").fadeOut("fast");
+});
+
 $("#infoClose").click(function(){
   $("#info").fadeOut("medium");
   $("#layer").fadeOut("fast");
@@ -849,6 +911,7 @@ $(document).ready(function(){
   fillLoadlist();
   $("#layer").hide();
   $("#editWindow").hide();
+  $("#settingsWindow").hide();
   $("#info").hide();
   // getFeaturedPlaylists();
   displayMessageStoreEmpty();
