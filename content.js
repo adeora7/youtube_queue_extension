@@ -6,8 +6,11 @@ var songToAdd = -1;
 document.getElementById("play_next").addEventListener('click', play_next, false);
 document.getElementById("pause_play").addEventListener('click', play_pause, false);
 document.getElementById("play_previous").addEventListener('click', play_previous, false);
+
+//player options
 document.getElementById("settings").addEventListener('click', open_settings, false);
 document.getElementById("empty").addEventListener('click', empty_queue, false);
+document.getElementById("shuffle").addEventListener('click', shuffle, false);
 
 // settings listeners
 document.getElementById("repeatAll").addEventListener('click', toggle_loop, false);
@@ -45,6 +48,12 @@ function play_previous()
 
 function empty_queue(){
   chrome.runtime.sendMessage({greeting : "empty_queue"}, function(response){
+    refresh();
+  })
+}
+
+function shuffle(){
+  chrome.runtime.sendMessage({greeting : "shuffle"}, function(response){
     refresh();
   })
 }
@@ -942,13 +951,13 @@ var onSortingStop = function( event, ui ) {
 };
 
 //New feature starts
-chrome.storage.sync.get('youtube_queue_extension_v140', function(data){
-  if(data['youtube_queue_extension_v140'] != undefined){
-    var msg = data['youtube_queue_extension_v140'].split("*");
+chrome.storage.sync.get('youtube_queue_extension_v142', function(data){
+  if(data['youtube_queue_extension_v142'] != undefined){
+    var msg = data['youtube_queue_extension_v142'].split("*");
     if(Number(msg[0]) > 0){
       notif( msg[1]);
       var newMsg = Number(msg[0]-1).toString() + "*" + msg[1];
-      chrome.storage.sync.set({'youtube_queue_extension_v140': newMsg}, function(){
+      chrome.storage.sync.set({'youtube_queue_extension_v142': newMsg}, function(){
 
       });
     }

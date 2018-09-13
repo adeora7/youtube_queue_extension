@@ -5,6 +5,22 @@ var main = {
 
 var showIconsToggle = "yes";
 
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  while (0 !== currentIndex) {
+
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 function updateShowIconsVariable(){
   chrome.storage.sync.get( "youtube_queue_extension_show_icons", function(data){
     if( data["youtube_queue_extension_show_icons"] != undefined)
@@ -26,19 +42,19 @@ chrome.storage.sync.get('youtube_queue_extension_queue', function(data){
 
 //New Feature Popup Starts
   //add new feature
-chrome.storage.sync.get('youtube_queue_extension_v140', function(data){
-  if(data['youtube_queue_extension_new_v140'] == undefined)
+chrome.storage.sync.get('youtube_queue_extension_v142', function(data){
+  if(data['youtube_queue_extension_new_v142'] == undefined)
   {
-    chrome.storage.sync.set({'youtube_queue_extension_v140': '5*Now Drag-Drop the videos in Queue to reorder.'}, function(){
+    chrome.storage.sync.set({'youtube_queue_extension_v142': '5*Shuffle Queue option added.'}, function(){
 
     });
   }
 });
 
   //remove old feature
-chrome.storage.sync.get('youtube_queue_extension_v139', function(data){
-  if(!(data['youtube_queue_extension_v139'] == undefined)){
-    chrome.storage.sync.remove('youtube_queue_extension_v139', function(){
+chrome.storage.sync.get('youtube_queue_extension_v140', function(data){
+  if(!(data['youtube_queue_extension_v140'] == undefined)){
+    chrome.storage.sync.remove('youtube_queue_extension_v140', function(){
 
     });
   }
@@ -335,6 +351,7 @@ chrome.runtime.onMessage.addListener(
     }
     else if(request.greeting == "empty_queue"){
       empty_queue();
+      // main.songs = shuffle(main.songs);
       sendResponse({res: "Queue is now empty."});
     }
     else if(request.greeting == "playFeatured"){
@@ -360,6 +377,9 @@ chrome.runtime.onMessage.addListener(
     }
     else if(request.greeting == "updatedShowIcons"){
       updateShowIconsVariable();
+    }
+    else if(request.greeting == "shuffle"){
+      main.songs = shuffle(main.songs);
     }
     // else if(request.greeting == "new_feature"){
     //   chrome.storage.sync.get('youtube_queue_extension_v140', function(data){
