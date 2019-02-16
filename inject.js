@@ -5,16 +5,25 @@ function removeDone(value, index, self){
   return thumbsDone.indexOf(value) == -1;
 }
 
+function reloadOldThumbs(){
+  var url = "https://www.youtube.com";
+  for(var k =0; k<thumbsDone.length; k++)
+  {
+    thumbsDone[k].getElementsByTagName("yt-icon")[0].setAttribute("href", url + thumbsDone[k].children[0].getAttribute("href"));
+  };
+}
+
 function addIcon(){
   chrome.runtime.sendMessage({greeting: "checkShowIconsToggle"}, function(res) {
         if(res.res == "yes")
         {
-          
+          //update old thumbs first
+          var url = "https://www.youtube.com";
+          reloadOldThumbs();
           var nl = document.getElementsByTagName("ytd-thumbnail");
           var thumbs = [];
           for(var i = nl.length; i--; thumbs.unshift(nl[i]));
           thumbs = thumbs.filter( removeDone );
-          var url = "https://www.youtube.com";
           for (let i = 0; i < thumbs.length; i++) {
             var node = document.createElement("yt-icon");
             var textnode = document.createTextNode("Q");
@@ -55,9 +64,6 @@ function addIcon(){
             thumbs[i].appendChild(node);
           }
           thumbsDone = thumbsDone.concat(thumbs);
-
-
-
         }
   });
   
@@ -81,6 +87,12 @@ observer.observe(document, {
   childList: true
 });
 
+document.addEventListener('transitionend', function(e) {
+    if (e.target.id === 'progress')
+    {
+        reloadOldThumbs();
+    }
+});
 
 // function pp(){
 // 	document.querySelector('.ytp-play-button').click();
