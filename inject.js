@@ -56,7 +56,8 @@ function addIcon(){
             node.onclick = function(event){
               // console.log(event);
               event.stopPropagation();
-              var link = this.getAttribute("href");
+              var link = "https://www.youtube.com" + event.target.parentElement.children[0].getAttribute("href");
+              // var link = this.getAttribute("href");
               chrome.runtime.sendMessage({greeting: "addIconClicked", link : link}, function(res) {
                 //Request sent to add video to queue
               });
