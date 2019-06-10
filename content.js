@@ -212,10 +212,15 @@ function refresh(){
       //     a.innerHTML +=  "<div class='songEach'><span class='play playingThis' songId='"+ i +"' title='play'>" + songs[i].name.substring(0, 25) +"..</span><div class='add dropdown-button' songId='"+ i +"' data-activates='dropdown1' title='Choose playlist to add video'>+</div><div class='close' songId='"+ i +"' title='Remove video'>X</div></div>";
       //   else
       //     a.innerHTML +=  "<div class='songEach'><span class='play' songId='"+ i +"' title='play'>" + songs[i].name.substring(0, 25) +"..</span><div class='add dropdown-button' songId='"+ i +"' data-activates='dropdown1' title='Choose playlist to add video'>+</div><div class='close' songId='"+ i +"' title='Remove video'>X</div></div>";
-      
+        if(songs[i].thumbnail == undefined){
+          songs[i].thumbnail = "images/default_thumbnail.jpg";
+        }
         a.innerHTML += "<div class='songEach ui-state-default'>"+
-                          "<div class='songEachName' title='"+songs[i].name+"' songId='"+i+"'>"+
-                            songs[i].name + "</div>"+
+                          "<div class='eachThumbnailAndTitleContainer'>"+
+                            "<img class='eachThumbnail' src='"+ songs[i].thumbnail +"' />"+
+                            "<div class='songEachName' title='"+songs[i].name+"' songId='"+i+"'>"+
+                              songs[i].name + "</div>"+
+                          "</div>"+
                           "<div class='songEachDurationAndOptions'>"+
                             "<div class='songEachDuration'>"+songs[i].duration+"</div>"+
                             "<div class='songEachOptions'>"+

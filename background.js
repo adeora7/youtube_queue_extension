@@ -210,9 +210,9 @@ function validateYouTubeUrl(url)
         }
 }
 
-function addtodisplay(name, url, duration)
+function addtodisplay(name, url, duration, thumbnail)
 {
-	       var data = {"name":name, "url":url, "duration": duration};
+	       var data = {"name":name, "url":url, "duration": duration, "thumbnail": thumbnail};
          main.songs.push(data);
          if(next_video == 0)
          {
@@ -236,7 +236,7 @@ var getJson = function(url, callback){
   x.onreadystatechange = function() {
     if (x.readyState == 4 && x.status == 200) {
       var the_name = x.response.items[0].snippet.title;
-      
+      var thumbnail = x.response.items[0].snippet.thumbnails.default.url;
       var str = x.response.items[0].contentDetails.duration;
       
       str = str.substr(2);
@@ -245,7 +245,7 @@ var getJson = function(url, callback){
       str = str.replace("S", "sec");
       str = str.trim();
       
-      addtodisplay(the_name, url, str);
+      addtodisplay(the_name, url, str, thumbnail);
       if(callback)
         callback();
     }

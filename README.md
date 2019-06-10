@@ -1,4 +1,4 @@
-# Youtube Queuing Extension
+# QueueTube
 chrome extension to queue youtube songs
 
 ## Features
